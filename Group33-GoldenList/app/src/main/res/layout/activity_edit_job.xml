@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#c332c6c6"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/editJob"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit Job"
+            android:textColor="#000"
+            android:textSize="35sp" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardElevation="2dp">
+
+            <EditText
+                android:id="@+id/edtEJobName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Job"
+                android:inputType="textCapSentences"
+                android:maxLines="1"/>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardElevation="2dp">
+
+            <EditText
+                android:id="@+id/edtEJobNote"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Note"
+                android:inputType="textCapSentences"
+                android:maxLines="1"/>
+
+        </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvPriority"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0"
+                android:gravity="center_vertical"
+                android:text="Priority level:"
+                android:textColor="#000"
+                android:textSize="20sp" />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbEPri1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/add_job_pri_state"
+                    android:button="@android:color/transparent"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="!"
+                    android:textColor="#E77E05"
+                    android:textSize="30sp" />
+
+                <RadioButton
+                    android:id="@+id/rbEPri2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/add_job_pri_state"
+                    android:button="@android:color/transparent"
+                    android:gravity="center"
+                    android:text="!!"
+                    android:textColor="#E77E05"
+                    android:textSize="30sp" />
+
+                <RadioButton
+                    android:id="@+id/rbEPri3"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/add_job_pri_state"
+                    android:button="@android:color/transparent"
+                    android:gravity="center"
+                    android:text="!!!"
+                    android:textColor="#E77E05"
+                    android:textSize="30sp" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Time:"
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1.0"
+                card_view:cardCornerRadius="5dp"
+                card_view:cardElevation="2dp">
+
+                <TextView
+                    android:id="@+id/tvEJobDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="25sp"
+                    android:textColor="@android:color/background_dark"/>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                card_view:cardCornerRadius="5dp"
+                card_view:cardElevation="2dp">
+
+                <Button
+                    android:id="@+id/btnEJobDate"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_calendar" />
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1.0"
+                card_view:cardCornerRadius="5dp"
+                card_view:cardElevation="2dp">
+
+                <TextView
+                    android:id="@+id/tvEJobStart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="20sp" />
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                card_view:cardCornerRadius="5dp"
+                card_view:cardElevation="2dp">
+
+                <Button
+                    android:id="@+id/btnEJobStart"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_time" />
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="1.0"
+                card_view:cardCornerRadius="5dp"
+                card_view:cardElevation="2dp">
+
+                <TextView
+                    android:id="@+id/tvEJobEnd"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textColor="@android:color/background_dark"/>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                card_view:cardCornerRadius="5dp"
+                card_view:cardElevation="2dp">
+
+                <Button
+                    android:id="@+id/btnEJobEnd"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_time" />
+
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnEJobSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="center_horizontal"
+        android:text="SAVE"
+        android:textSize="20sp" />
+
+</LinearLayout>

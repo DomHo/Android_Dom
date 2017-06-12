@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_timetable_under"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/item_timetable_above"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="55dp"
+            android:layout_height="50dp">
+
+                <ImageButton
+                    android:id="@+id/imbCheck"
+                    android:layout_width="46dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="1dp"
+                    android:background="@drawable/item_timetable_checkoff" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1.0"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvJobName"
+                android:layout_width="match_parent"
+                android:layout_height="28dp"
+                android:gravity="center_vertical"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/tvJobTime"
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvPriority"
+            android:layout_width="25dp"
+            android:layout_height="50dp"
+            android:gravity="center_vertical|right"
+            android:textColor="#E77E05"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/btnJobArrow"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/arrow_down"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvJobNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="55dp"
+        android:layout_marginRight="45dp"
+        android:layout_marginBottom="3dp"
+        android:gravity="center_horizontal"
+        android:textSize="15sp"
+        android:textColor="#000"
+        android:visibility="gone"/>
+
+</LinearLayout>
