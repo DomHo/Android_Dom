@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_deliveries"
+            android:icon="@drawable/ic_deliveries_grey"
+            android:title="Deliveries" />
+        <item
+            android:id="@+id/nav_explore"
+            android:icon="@drawable/ic_explore_grey"
+            android:title="Explore" />
+        <item
+            android:id="@+id/nav_olders_history"
+            android:icon="@drawable/ic_olders_history_grey"
+            android:title="Olders history" />
+        <item
+            android:id="@+id/nav_contributions"
+            android:icon="@drawable/ic_contributions_grey"
+            android:title="Contributions" />
+        <item
+            android:id="@+id/nav_help_feedback"
+            android:icon="@drawable/ic_help_feedback_grey"
+            android:title="Help &amp; feedback" />
+    </group>
+
+</menu>

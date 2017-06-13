@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="235dp"
+    android:layout_marginTop="6dp"
+    card_view:cardCornerRadius="10dp"
+    card_view:cardElevation="2dp"
+    tools:context="sg.vinova.dom.internship.item.item_delivery">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="5dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivDelivery"
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="20dp"
+            tools:text="Food 1"
+            android:textSize="30sp"
+            />
+
+        <TextView
+            android:id="@+id/tvNation"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="20dp"
+            tools:text="Nation 1"
+            android:textSize="30sp"/>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
