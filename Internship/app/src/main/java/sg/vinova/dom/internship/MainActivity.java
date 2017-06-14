@@ -15,18 +15,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckedTextView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.RadioButton;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.apmem.tools.layouts.FlowLayout;
 
-import sg.vinova.dom.internship.Adapter.DeliveriesAdapter;
 import sg.vinova.dom.internship.Fragment.DeliveriesFragment;
 import sg.vinova.dom.internship.Fragment.ExploreFragment;
-import sg.vinova.dom.internship.Model.Delivery;
 
-import static android.support.v7.widget.LinearLayoutManager.*;
+import static android.R.attr.button;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -57,6 +57,38 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        FlowLayout flNation = (FlowLayout) findViewById(R.id.flNation);
+
+        String[] nation = {"Italian", "America", "French", "Pizza", "Noodle", "Japan", "Breakfast", "Danish", "Potugese"};
+
+        for (String aNation : nation) {
+            final CheckedTextView checkedTextView = new CheckedTextView(this);
+            checkedTextView.setText(aNation);
+            checkedTextView.setTextSize(20);
+            checkedTextView.setPadding(20, 10, 20, 10);
+            FlowLayout.LayoutParams llp = new FlowLayout.LayoutParams(FlowLayout.LayoutParams.WRAP_CONTENT, FlowLayout.LayoutParams.WRAP_CONTENT);
+            llp.setMargins(0, 15, 15, 0);
+            checkedTextView.setLayoutParams(llp);
+            checkedTextView.setBackgroundResource(R.drawable.flow_layout_element_uncheck);
+            checkedTextView.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+            checkedTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (checkedTextView.isChecked()) {
+                        checkedTextView.setChecked(false);
+                        checkedTextView.setBackgroundResource(R.drawable.flow_layout_element_uncheck);
+                        checkedTextView.setTextColor(getResources().getColor(R.color.colorPrimary));
+                    } else {
+                        checkedTextView.setChecked(true);
+                        checkedTextView.setBackgroundResource(R.drawable.flow_layout_element_checked);
+                        checkedTextView.setTextColor(getResources().getColor(R.color.colorWhite));
+                    }
+                }
+            });
+            flNation.addView(checkedTextView);
+        }
 
         toolbar.setTitle(R.string.drawer_deliveries);
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
@@ -100,7 +132,6 @@ public class MainActivity extends AppCompatActivity
 
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.openDrawer(GravityCompat.END);
-            Toast.makeText(this, "Filter list", Toast.LENGTH_SHORT).show();
             return true;
         }
 
@@ -117,12 +148,10 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_deliveries:
                 toolbar.setTitle(R.string.drawer_deliveries);
                 fragmentTransaction.replace(R.id.mainFrame, DeliveriesFragment.getInstance());
-                fragmentTransaction.commit();
                 break;
             case R.id.nav_explore:
                 toolbar.setTitle(R.string.drawer_explore);
                 fragmentTransaction.replace(R.id.mainFrame, ExploreFragment.getInstance());
-                fragmentTransaction.commit();
                 break;
             case R.id.nav_olders_history:
                 toolbar.setTitle(R.string.drawer_olders_history);
@@ -134,7 +163,7 @@ public class MainActivity extends AppCompatActivity
                 toolbar.setTitle(R.string.drawer_help_amp_feedback);
                 break;
         }
-
+        fragmentTransaction.commit();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
