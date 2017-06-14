@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 import sg.vinova.dom.internship.Model.Delivery;
@@ -49,7 +47,7 @@ public class DeliveriesAdapter extends RecyclerView.Adapter <DeliveriesAdapter.V
         return listData.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
 
         public ImageView ivDelivery;
         public TextView tvName;

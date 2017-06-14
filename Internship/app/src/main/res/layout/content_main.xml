@@ -8,22 +8,9 @@
     tools:context="sg.vinova.dom.internship.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-   <!-- <FrameLayout
-        android:id="@+id/frame_main"
+    <FrameLayout
+        android:id="@+id/mainFrame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">
-
-    </FrameLayout>-->
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/ahihi"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
-
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

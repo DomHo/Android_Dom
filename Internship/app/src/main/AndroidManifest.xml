@@ -21,7 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".item.item_delivery"></activity>
+        <activity android:name=".item.ItemDeliveryActivity" />
+        <activity android:name=".item.ItemExploreActivity"></activity>
     </application>
 
 </manifest>

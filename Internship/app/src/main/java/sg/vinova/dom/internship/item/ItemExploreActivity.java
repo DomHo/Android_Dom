@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 import sg.vinova.dom.internship.R;
 
-public class item_delivery extends AppCompatActivity {
+public class ItemExploreActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_delivery);
+        setContentView(R.layout.activity_item_explore);
     }
 }
