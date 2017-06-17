@@ -1,18 +1,18 @@
 package sg.vinova.dom.internship.Model;
 
 /**
- * Created by HNS on 14/06/2017.
+ * Created by HNS on 15/06/2017.
  */
 
-public class Explore {
-    private int id;
+public class Food {
+    private int type;
     private String image;
     private String name;
     private String rate;
     private String nation;
 
-    public Explore(int id, String image, String name, String rate, String nation) {
-        this.id = id;
+    public Food(int type, String image, String name, String rate, String nation) {
+        this.type = type;
         this.image = image;
         this.name = name;
         this.rate = rate;
@@ -20,8 +20,9 @@ public class Explore {
     }
 
     // GET
-    public int getId() {
-        return id;
+    public int getType() {
+
+        return type;
     }
 
     public String getImage() {
@@ -41,8 +42,8 @@ public class Explore {
     }
 
     // SET
-    public void setId(int id) {
-        this.id = id;
+    public void setType(int type) {
+        this.type = type;
     }
 
     public void setImage(String image) {

@@ -1,11 +1,8 @@
-package sg.vinova.dom.internship;
+package sg.vinova.dom.internship.ui;
 
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,23 +12,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckedTextView;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
 
 import org.apmem.tools.layouts.FlowLayout;
 
-import sg.vinova.dom.internship.Fragment.DeliveriesFragment;
-import sg.vinova.dom.internship.Fragment.ExploreFragment;
+import java.util.ArrayList;
 
-import static android.R.attr.button;
+import sg.vinova.dom.internship.R;
+import sg.vinova.dom.internship.ui.DeliveriesFragment;
+import sg.vinova.dom.internship.ui.ExploreFragment;
+import sg.vinova.dom.internship.Model.Food;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar toolbar;
+    ArrayList<ArrayList<Food>> listData;
+    int position = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +53,33 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        listData = new ArrayList<>();
+
+        for (int i = 0; i <= 10; i++) {
+            ArrayList<Food> temp = new ArrayList<>();
+            for (int k = 0; k <= 10; k++) {
+                if (k%2 == 1)
+                    temp.add(new Food(i, "https://www.gimmesomeoven.com/wp-content/uploads/2009/10/sesame-noodles.jpg", "Food " + i + k, "3.5", "Nation " + i + k));
+                else
+                    temp.add(new Food(i, "https://www.toppers.com/Portals/0/house-pizza-bacon-cheeseburger.jpg", "Food " + i + k, "3.5", "Nation " + i + k));
+            }
+            listData.add(temp);
+        }
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_deliveries);
+        navigationView.getMenu().performIdentifierAction(R.id.nav_deliveries, 0);
+        toolbar.setTitle(R.string.drawer_deliveries);
 
         FlowLayout flNation = (FlowLayout) findViewById(R.id.flNation);
 
-        String[] nation = {"Italian", "America", "French", "Pizza", "Noodle", "Japan", "Breakfast", "Danish", "Potugese"};
+        final String[] nation = {"Italian", "America", "French", "Pizza", "Noodle", "Japan", "Breakfast", "Danish", "Potugese"};
+        final ArrayList<CheckedTextView> listTag = new ArrayList<>();
+        final Button btnAll = (Button) findViewById(R.id.btnAll);
+        final Button btnNone = (Button) findViewById(R.id.btnNone);
+        btnNone.setBackgroundResource(R.color.colorPrimary);
+        final int[] countTag = {0};
 
         for (String aNation : nation) {
             final CheckedTextView checkedTextView = new CheckedTextView(this);
@@ -80,20 +99,58 @@ public class MainActivity extends AppCompatActivity
                         checkedTextView.setChecked(false);
                         checkedTextView.setBackgroundResource(R.drawable.flow_layout_element_uncheck);
                         checkedTextView.setTextColor(getResources().getColor(R.color.colorPrimary));
+                        countTag[0]--;
                     } else {
                         checkedTextView.setChecked(true);
                         checkedTextView.setBackgroundResource(R.drawable.flow_layout_element_checked);
                         checkedTextView.setTextColor(getResources().getColor(R.color.colorWhite));
+                        countTag[0]++;
+                    }
+                    if (countTag[0] == 0) {
+                        btnAll.setBackgroundResource(R.color.colorGrey);
+                        btnNone.setBackgroundResource(R.color.colorPrimary);
+                    }
+                    else if (countTag[0] == nation.length){
+                        btnAll.setBackgroundResource(R.color.colorPrimary);
+                        btnNone.setBackgroundResource(R.color.colorGrey);
+                    }
+                    else {
+                        btnAll.setBackgroundResource(R.color.colorGrey);
+                        btnNone.setBackgroundResource(R.color.colorGrey);
                     }
                 }
             });
             flNation.addView(checkedTextView);
+            listTag.add(checkedTextView);
         }
 
-        toolbar.setTitle(R.string.drawer_deliveries);
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.mainFrame, DeliveriesFragment.getInstance());
-        fragmentTransaction.commit();
+        btnAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                countTag[0] = nation.length;
+                btnAll.setBackgroundResource(R.color.colorPrimary);
+                btnNone.setBackgroundResource(R.color.colorGrey);
+                for (CheckedTextView checkedTextView : listTag) {
+                    checkedTextView.setChecked(true);
+                    checkedTextView.setBackgroundResource(R.drawable.flow_layout_element_checked);
+                    checkedTextView.setTextColor(getResources().getColor(R.color.colorWhite));
+                }
+            }
+        });
+
+        btnNone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                countTag[0] = 0;
+                btnAll.setBackgroundResource(R.color.colorGrey);
+                btnNone.setBackgroundResource(R.color.colorPrimary);
+                for (CheckedTextView checkedTextView : listTag) {
+                    checkedTextView.setChecked(false);
+                    checkedTextView.setBackgroundResource(R.drawable.flow_layout_element_uncheck);
+                    checkedTextView.setTextColor(getResources().getColor(R.color.colorPrimary));
+                }
+            }
+        });
     }
 
     @Override
@@ -119,14 +176,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_filter_list) {
-
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_viewR);
             navigationView.setPadding(0, statusBarHeight(getResources()), 0, 0);
 
@@ -141,17 +193,19 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 
         switch (item.getItemId()){
             case R.id.nav_deliveries:
                 toolbar.setTitle(R.string.drawer_deliveries);
-                fragmentTransaction.replace(R.id.mainFrame, DeliveriesFragment.getInstance());
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.mainFrame, DeliveriesFragment.newInstance(listData.get(position)))
+                        .commitAllowingStateLoss();
                 break;
             case R.id.nav_explore:
                 toolbar.setTitle(R.string.drawer_explore);
-                fragmentTransaction.replace(R.id.mainFrame, ExploreFragment.getInstance());
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.mainFrame, ExploreFragment.newInstance(listData))
+                        .commitAllowingStateLoss();
                 break;
             case R.id.nav_olders_history:
                 toolbar.setTitle(R.string.drawer_olders_history);
@@ -163,7 +217,6 @@ public class MainActivity extends AppCompatActivity
                 toolbar.setTitle(R.string.drawer_help_amp_feedback);
                 break;
         }
-        fragmentTransaction.commit();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -171,5 +224,9 @@ public class MainActivity extends AppCompatActivity
 
     private static int statusBarHeight(android.content.res.Resources res) {
         return (int) (24 * res.getDisplayMetrics().density);
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

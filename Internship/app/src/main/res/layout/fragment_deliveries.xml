@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="sg.vinova.dom.internship.Fragment.DeliveriesFragment">
+    tools:context="sg.vinova.dom.internship.ui.DeliveriesFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvDeliveries"

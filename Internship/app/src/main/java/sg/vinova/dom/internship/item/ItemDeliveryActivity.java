@@ -10,6 +10,6 @@ public class ItemDeliveryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_delivery);
+        setContentView(R.layout.item_delivery);
     }
 }

@@ -1,4 +1,4 @@
-package sg.vinova.dom.internship.Fragment;
+package sg.vinova.dom.internship.ui;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -8,24 +8,25 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import sg.vinova.dom.internship.Adapter.DeliveriesAdapter;
-import sg.vinova.dom.internship.Model.Delivery;
+import sg.vinova.dom.internship.adapter.DeliveriesAdapter;
+import sg.vinova.dom.internship.Model.Food;
 import sg.vinova.dom.internship.R;
 
 public class DeliveriesFragment extends Fragment {
 
     private View rootView;
-    private static DeliveriesFragment fragment = null;
+    private static ArrayList<Food> listData;
 
 //    private OnFragmentInteractionListener mListener;
 
-    public static DeliveriesFragment getInstance() {
-        if (fragment == null)
-            fragment = new DeliveriesFragment();
+    public static DeliveriesFragment newInstance(ArrayList<Food> listFood) {
+        DeliveriesFragment fragment = new DeliveriesFragment();
+        listData = listFood;
         return fragment;
     }
 
@@ -46,13 +47,9 @@ public class DeliveriesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         RecyclerView rvDeliveries = (RecyclerView) rootView.findViewById(R.id.rvDeliveries);
-        List<Delivery> listData = new ArrayList<>();
+        Animation translate_left = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.translate_left);
+        rvDeliveries.startAnimation(translate_left);
 
-        // Data demo
-        for (int i = 1; i <= 10; i++){
-            listData.add(new Delivery(i, "https://www.gimmesomeoven.com/wp-content/uploads/2009/10/sesame-noodles.jpg", "Food " + i, "Nation " + i));
-        }
-        //
         DeliveriesAdapter deliveriesAdapter = new DeliveriesAdapter(rootView.getContext(), listData);
         rvDeliveries.setAdapter(deliveriesAdapter);
         rvDeliveries.setLayoutManager(new LinearLayoutManager(view.getContext()));
