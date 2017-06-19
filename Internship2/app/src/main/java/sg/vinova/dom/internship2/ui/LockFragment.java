@@ -2,22 +2,33 @@ package sg.vinova.dom.internship2.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+
 import sg.vinova.dom.internship2.R;
+import sg.vinova.dom.internship2.model.Home;
 
 public class LockFragment extends Fragment {
 
    // private OnFragmentInteractionListener mListener;
 
-    public static LockFragment newInstance() {
+    public static LockFragment newInstance(Bundle bundle) {
         LockFragment fragment = new LockFragment();
+        fragment.setArguments(bundle);
         return fragment;
     }
 
@@ -37,12 +48,20 @@ public class LockFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ImageView imageView = (ImageView) getActivity().findViewById(R.id.ivImage);
-        Glide.with(this).load("https://wallpaperscraft.com/image/beach_tropics_sea_sand_palm_trees_sunset_84729_1080x1920.jpg").into(imageView);
+        final ImageView imageView = (ImageView) getActivity().findViewById(R.id.ivImage);
+        ArrayList<Home> listData = (ArrayList<Home>) this.getArguments().getSerializable("listData");
+        Glide.with(this).load(listData.get(0).getImage()).into(imageView);
+
+        final Animation translate_up = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.translate_up);
+        imageView.startAnimation(translate_up);
+
+        final HomeFragment homeFragment = HomeFragment.newInstance(this.getArguments());
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.flMain, HomeFragment.newInstance()).commitNowAllowingStateLoss();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.flMain, homeFragment)
+                        .commitNowAllowingStateLoss();
             }
         });
     }

@@ -4,7 +4,7 @@
     tools:context="sg.vinova.dom.internship2.ui.HomeActivity">
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_bookmark"
+        android:title="@string/bookmark"
+        app:showAsAction="always" />
 </menu>
