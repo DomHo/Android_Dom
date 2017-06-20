@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="sg.vinova.dom.example_mvp_login.MainActivity">
+    tools:context="sg.vinova.dom.example_mvp_login.ui.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +22,11 @@
             android:hint="Username"
             android:inputType="textEmailAddress"
             android:maxLines="1"
-            android:textSize="30dp"/>
+            android:textSize="30dp">
+
+            <requestFocus/>
+
+        </EditText>
 
         <EditText
             android:id="@+id/edtPassword"
@@ -34,18 +38,30 @@
             android:maxLines="1"
             android:textSize="30dp"/>
 
-        <Button
-            android:id="@+id/btnLogin"
+        <CheckBox
+            android:id="@+id/cbSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="LOG IN"/>
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Save account"
+            android:textSize="20sp"/>
+
+        <Button
+            android:id="@+id/btnSignin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SIGN IN"/>
+
+        <Button
+            android:id="@+id/btnSignup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="SIGN UP"/>
+
+
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:layout_weight="1.0" />
 
 </LinearLayout>

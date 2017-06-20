@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.flMain, StoreFragment.newInstance(listFood))
                             .commitAllowingStateLoss();
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
                     getWindow().setStatusBarColor(getResources().getColor(R.color.colorGrey));
                     return true;
                 case R.id.navigation_magazine:
@@ -63,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_cart:
                     return true;
                 case R.id.navigation_me:
+                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.flMain, MeFragment.newInstance())
+                            .commitAllowingStateLoss();
                     return true;
             }
             return false;
