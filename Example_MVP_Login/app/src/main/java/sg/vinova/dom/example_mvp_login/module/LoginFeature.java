@@ -5,22 +5,20 @@ import sg.vinova.dom.example_mvp_login.model.Account;
 public interface LoginFeature {
 
     interface View {
-        void onLoginSuccess();
+        void onLoginSuccess(Account account);
 
         void onLoginFail(String message);
-
-        void checkDataConstraint(Account account);
 
         void logout(Account account);
     }
 
     interface Presenter {
-        void checkValidate(String username, String password);
+        void checkValidate(String username, String password, boolean save);
 
-        void login(Account account, boolean save);
+        void login(String username, String password, boolean save);
 
         void logout();
 
-        void signup(String username, String password);
+        void signup(String username, String password, boolean save);
     }
 }

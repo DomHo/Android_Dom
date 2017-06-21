@@ -1,6 +1,12 @@
 package sg.vinova.dom.example_mvp_login.module;
 
+import android.content.Context;
 import android.content.SharedPreferences;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import sg.vinova.dom.example_mvp_login.model.Account;
 import sg.vinova.dom.example_mvp_login.ui.WelcomeActivity;
@@ -26,44 +32,66 @@ public class LoginPresenterImpl implements LoginFeature.Presenter {
     }
 
     private boolean isValid(String username, String password) {
-        boolean empty = false;
         if (username.length() < 1) {
-            loginView.onLoginFail("Username");
-            empty = true;
+            loginView.onLoginFail("username empty");
+            return true;
+        }
+        if (username.contains(" ")) {
+            loginView.onLoginFail(" ");
+            return true;
+        }
+        if (username.contains(";")) {
+            loginView.onLoginFail(" ");
+            return true;
         }
         if (password.length() < 1) {
-            loginView.onLoginFail("Password");
-            empty = true;
+            loginView.onLoginFail("password empty");
+            return true;
         }
-        return empty;
+        return false;
     }
 
     @Override
-    public void checkValidate(String username, String password) {
+    public void checkValidate(String username, String password, boolean save) {
         if (!isValid(username, password))
-            loginView.checkDataConstraint(new Account(username, password));
+            login(username, password, save);
     }
 
     @Override
-    public void login(Account account, boolean save) {
+    public void login(String username, String password, boolean save) {
 
-        String username = account.getUsername();
-        String password = account.getPassword();
+        Account account = null;
         boolean right = false;
         boolean exist = false;
-        SharedPreferences pre = mainContext.getSharedPreferences("my_data",MODE_PRIVATE);
 
-        for (int i = 0; i < pre.getInt("size", 0); i++) {
-            if (pre.getString("username" + i, "").equals(username)) {
-                if (pre.getString("password" + i, "").equals(password))
+        File file = new File(mainContext.getFilesDir(), "my_file");
+        int length = (int) file.length();
+        byte[] bytes = new byte[length];
+
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bytes);
+            fileInputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String[] contents = new String(bytes).split("\n");
+        int size = Integer.parseInt(contents[0]);
+        for (int i = 0; i <= size; i++) {
+            String[] temp = contents[i].split(";");
+            if (username.equals(temp[0])){
+                if (password.equals(temp[1])){
+                    account = new Account(temp[0], temp[1], temp[2]);
                     right = true;
+                }
                 else
                     exist = true;
                 break;
             }
         }
         if (right) {
-            loginView.onLoginSuccess();
+            loginView.onLoginSuccess(account);
+            file.delete();
         } else
             if (exist)
                 loginView.onLoginFail("Wrong");
@@ -78,7 +106,7 @@ public class LoginPresenterImpl implements LoginFeature.Presenter {
     }
 
     @Override
-    public void signup(String username, String password) {
+    public void signup(String username, String password, boolean save) {
         SharedPreferences pre = mainContext.getSharedPreferences("my_data", MODE_PRIVATE);
         SharedPreferences.Editor edit = pre.edit();
         int size = pre.getInt("size", 0);
@@ -87,13 +115,13 @@ public class LoginPresenterImpl implements LoginFeature.Presenter {
         edit.putBoolean("save" + size, false);
         edit.putInt("size", size + 1);
         edit.apply();
-        checkValidate(username, password);
+        checkValidate(username, password, save);
     }
 
     private void loadPreferences() {
         SharedPreferences pre = mainContext.getSharedPreferences("my_data",MODE_PRIVATE);
         boolean save = pre.getBoolean("save", false);
-        Account account = new Account("", "");
+        Account account = new Account("", "", "");
         if(save) {
             account.setUsername(pre.getString("username", ""));
             account.setPassword(pre.getString("password", ""));
