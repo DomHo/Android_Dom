@@ -13,11 +13,13 @@ public interface LoginFeature {
     }
 
     interface Presenter {
+        LoginPresenterImpl getInstance();
+
         void checkValidate(String username, String password, boolean save);
 
         void login(String username, String password, boolean save);
 
-        void logout();
+        void logout(Account account);
 
         void signup(String username, String password, boolean save);
     }

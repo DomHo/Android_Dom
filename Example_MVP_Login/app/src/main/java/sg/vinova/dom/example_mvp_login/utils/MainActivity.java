@@ -1,53 +1,23 @@
-package sg.vinova.dom.example_mvp_login.ui;
+package sg.vinova.dom.example_mvp_login.utils;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
-
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 
 import sg.vinova.dom.example_mvp_login.R;
 import sg.vinova.dom.example_mvp_login.model.Account;
 import sg.vinova.dom.example_mvp_login.module.LoginFeature;
 import sg.vinova.dom.example_mvp_login.module.LoginPresenterImpl;
-
-import static android.R.attr.bitmap;
 
 public class MainActivity extends AppCompatActivity implements LoginFeature.View {
 
@@ -56,12 +26,14 @@ public class MainActivity extends AppCompatActivity implements LoginFeature.View
     private Button btnSignin;
     private Button btnSignup;
     private CheckBox cbSave;
-    public static Context mainContext;
-    public static LoginPresenterImpl presenter;
+    private LoginPresenterImpl presenter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        presenter = MyApplication.presenter;
+        presenter.setLoginView(this);
 
         edtUsername = (EditText) findViewById(R.id.edtUsername);
         edtPassword = (EditText) findViewById(R.id.edtPassword);
@@ -69,8 +41,6 @@ public class MainActivity extends AppCompatActivity implements LoginFeature.View
         btnSignin = (Button) findViewById(R.id.btnSignin);
         btnSignup = (Button) findViewById(R.id.btnSignup);
 
-        mainContext = getApplicationContext();
-        presenter = new LoginPresenterImpl(this);
         btnSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,49 +51,23 @@ public class MainActivity extends AppCompatActivity implements LoginFeature.View
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.signup(edtUsername.getText().toString(), edtPassword.getText().toString(), cbSave.isChecked());
+//                presenter.signup(edtUsername.getText().toString(), edtPassword.getText().toString(), cbSave.isChecked());
             }
         });
-
-        /////////////////////////////////////////////////////////////////
-
-        File file = new File(getFilesDir(), "my_file");
-        FileOutputStream fileOutputStream;
-        try {
-            fileOutputStream = new FileOutputStream(file);
-
-            String size = "10" + "\n";
-            fileOutputStream.write(size.getBytes());
-            for (int i = 1; i <= 10; i++) {
-                String username = "g" + i + ";";
-                String password = "g" + i + ";";
-                String background = "https://cdn.pixabay.com/photo/2015/06/10/19/13/background-805060_960_720.jpg" + "\n";
-                fileOutputStream.write(username.getBytes());
-                fileOutputStream.write(password.getBytes());
-                fileOutputStream.write(background.getBytes());
-            }
-            fileOutputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        /////////
-        ////////////Download file google drive
-
-    }
-
-    @Override
-    public void onLoginSuccess(Account account) {
-        Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, WelcomeActivity.class);
-        intent.putExtra("user", account.getUsername());
-        intent.putExtra("background", account.getImage());
-        startActivity(intent);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         edtPassword.getText().clear();
+    }
+
+    @Override
+    public void onLoginSuccess(Account account) {
+        Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, WelcomeActivity.class);
+        intent.putExtra("account", account);
+        startActivity(intent);
     }
 
     @Override
@@ -146,9 +90,10 @@ public class MainActivity extends AppCompatActivity implements LoginFeature.View
 
     @Override
     public void logout(Account account) {
-        if (cbSave.isChecked())
+        if (cbSave.isChecked()) {
             edtUsername.setText(account.getUsername());
-        edtPassword.setText(account.getPassword());
+            edtPassword.setText(account.getPassword());
+        }
     }
 
 //    public void saveImage(Context context, Bitmap b, String imageName) {
