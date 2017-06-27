@@ -1,0 +1,87 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:theme="@style/AppTheme.NoActionBar">
+
+    <EditText
+        android:id="@+id/edtUsername"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:hint="@string/login_username"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:maxLength="50"
+        android:textCursorDrawable="@color/colorPrimary"
+        android:textSize="18sp">
+
+        <requestFocus />
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/edtPassword"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:hint="@string/login_password"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:textCursorDrawable="@color/colorPrimary"
+        android:textSize="18sp"/>
+
+    <CheckBox
+        android:id="@+id/cbSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/login_save_account"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_horizontal"
+        android:textSize="20sp"
+        tools:text="noti"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnLogup"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/logup"
+            android:textColor="#FFF"
+            android:textSize="20sp"
+            android:layout_marginRight="30dp"/>
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            android:textColor="#FFF"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnGuest"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/login_guest"
+        android:textColor="#FFF"
+        android:textSize="20sp" />
+
+</LinearLayout>

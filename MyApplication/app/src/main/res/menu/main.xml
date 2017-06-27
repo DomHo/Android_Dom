@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/star"
+        android:title=" "
+        android:icon="@android:drawable/btn_star_big_on"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/blink"
+        android:title="blink"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/clockwise"
+        android:title="clockwise"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/fade"
+        android:title="fade"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/move"
+        android:title="move"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/myanimation"
+        android:title="myanimation"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/slide"
+        android:title="slide"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/down"
+        android:title="down"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/left"
+        android:title="left"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/right"
+        android:title="right"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/up"
+        android:title="up"
+        app:showAsAction="never" />
+
+
+</menu>
