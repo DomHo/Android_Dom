@@ -77,7 +77,7 @@ public class MyCustomView extends LinearLayout {
         edtPassword = (EditText) rootView.findViewById(R.id.edtPassword);
         cbSave = (CheckBox) rootView.findViewById(R.id.cbSave);
         tvMessage = (TextView) rootView.findViewById(R.id.tvMessage);
-        btnSignup = (Button) rootView.findViewById(R.id.btnLogup);
+        btnSignup = (Button) rootView.findViewById(R.id.btnSignup);
         btnLogin = (Button) rootView.findViewById(R.id.btnLogin);
         btnGuest = (Button) rootView.findViewById(R.id.btnGuest);
 

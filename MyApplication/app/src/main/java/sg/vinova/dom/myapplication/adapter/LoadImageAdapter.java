@@ -1,15 +1,11 @@
-package sg.vinova.dom.myapplication.loadImageFeature;
+package sg.vinova.dom.myapplication.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,9 +15,8 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import sg.vinova.dom.myapplication.R;
+import sg.vinova.dom.myapplication.loadImageFeature.LoadImage;
 import sg.vinova.dom.myapplication.model.Image;
-import sg.vinova.dom.myapplication.utils.DetailFragment;
-import sg.vinova.dom.myapplication.utils.GalleryFragment;
 
 /**
  * Created by HNS on 27/06/2017.

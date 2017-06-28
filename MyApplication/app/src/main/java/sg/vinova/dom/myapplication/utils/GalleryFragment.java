@@ -1,6 +1,5 @@
 package sg.vinova.dom.myapplication.utils;
 
-import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,16 +10,14 @@ import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-
 import sg.vinova.dom.myapplication.R;
 import sg.vinova.dom.myapplication.loadImageFeature.LoadImage;
-import sg.vinova.dom.myapplication.loadImageFeature.LoadImageAdapter;
+import sg.vinova.dom.myapplication.adapter.LoadImageAdapter;
 import sg.vinova.dom.myapplication.loadImageFeature.LoadImagePresenterImpl;
-import sg.vinova.dom.myapplication.loginFeature.Login;
 
 public class GalleryFragment extends Fragment implements LoadImage.View {
 
