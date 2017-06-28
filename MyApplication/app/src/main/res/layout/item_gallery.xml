@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/llItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -16,7 +17,9 @@
             android:id="@+id/ivImage"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:scaleType="centerCrop"/>
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            tools:list_item="@layout/item_data"/>
 
         <TextView
             android:id="@+id/tvContent"
@@ -24,7 +27,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="15dp"
             tools:text="Content"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
     </LinearLayout>
 

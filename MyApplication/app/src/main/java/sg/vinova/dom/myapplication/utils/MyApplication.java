@@ -37,7 +37,7 @@ public class MyApplication extends Application {
                     realm.insertOrUpdate(account);
                 }
 
-                for (int i = 0; i < 1000; i++) {
+                for (int i = 0; i < 100; i++) {
                     if (i % 3 == 0)
                         image = new Image(i, "Image " + i, "", "https://lh3.googleusercontent.com/-R0e4S4Gkq9M/VxekkHvg_CI/AAAAAAAAB1A/_RFmqmFztEo/s1600/natural%252520hd%252520wallpaper%252520background9155691.jpg");
                     if (i % 3 == 1)

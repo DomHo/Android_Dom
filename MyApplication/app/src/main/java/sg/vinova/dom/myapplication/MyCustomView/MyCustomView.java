@@ -20,7 +20,7 @@ public class MyCustomView extends LinearLayout {
     private EditText edtUsername, edtPassword;
     private CheckBox cbSave;
     private TextView tvMessage;
-    public Button btnLogup, btnLogin, btnGuest;
+    public Button btnSignup, btnLogin, btnGuest;
 
     public String getUsername() {
         return edtUsername.getText().toString();
@@ -77,7 +77,7 @@ public class MyCustomView extends LinearLayout {
         edtPassword = (EditText) rootView.findViewById(R.id.edtPassword);
         cbSave = (CheckBox) rootView.findViewById(R.id.cbSave);
         tvMessage = (TextView) rootView.findViewById(R.id.tvMessage);
-        btnLogup = (Button) rootView.findViewById(R.id.btnLogup);
+        btnSignup = (Button) rootView.findViewById(R.id.btnLogup);
         btnLogin = (Button) rootView.findViewById(R.id.btnLogin);
         btnGuest = (Button) rootView.findViewById(R.id.btnGuest);
 
