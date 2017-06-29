@@ -74,8 +74,7 @@ public class LoginActivity extends AppCompatActivity implements Login.View, View
     public void onBackPressed() {
         if (flag) {
             onClick(findViewById(R.id.btnSingup1));
-        }
-        else
+        } else
             super.onBackPressed();
     }
 

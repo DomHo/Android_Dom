@@ -1,6 +1,5 @@
 package sg.vinova.dom.myapplication.loadImageFeature;
 
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,10 +13,12 @@ import sg.vinova.dom.myapplication.model.Image;
 
 public interface LoadImage {
     interface View {
-        void shareElement(ImageView imageView, TextView textView);
+        void loadNewData(List<Image> imageList);
+
+        void shareElement(ImageView imageView, TextView textView, Image image);
     }
 
     interface Presenter {
-        List<Image> getListImage();
+        void getNewData();
     }
 }

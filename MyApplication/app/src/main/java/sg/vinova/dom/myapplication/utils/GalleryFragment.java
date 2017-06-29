@@ -1,6 +1,5 @@
 package sg.vinova.dom.myapplication.utils;
 
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,23 +9,24 @@ import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import java.util.List;
+
 import sg.vinova.dom.myapplication.R;
 import sg.vinova.dom.myapplication.loadImageFeature.LoadImage;
 import sg.vinova.dom.myapplication.adapter.LoadImageAdapter;
 import sg.vinova.dom.myapplication.loadImageFeature.LoadImagePresenterImpl;
-import sg.vinova.dom.myapplication.retrofit.PlaceholderClient;
+import sg.vinova.dom.myapplication.model.Image;
 
 public class GalleryFragment extends Fragment implements LoadImage.View {
 
     private LoadImagePresenterImpl loadImagePresenter;
 
     View rootView;
+    RecyclerView rvGallery;
+    LoadImageAdapter loadImageAdapter = null;
 
     public static GalleryFragment newInstance() {
         return new GalleryFragment();
@@ -35,6 +35,8 @@ public class GalleryFragment extends Fragment implements LoadImage.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadImagePresenter = new LoadImagePresenterImpl(this);
+        loadImagePresenter.getNewData();
     }
 
     @Override
@@ -47,28 +49,23 @@ public class GalleryFragment extends Fragment implements LoadImage.View {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        loadImagePresenter = new LoadImagePresenterImpl(this);
 
-        ////////////
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("https://jsonplaceholder.typicode.com/")
-                .addConverterFactory(GsonConverterFactory.create());
-
-        Retrofit retrofit = builder.build();
-
-        PlaceholderClient client = retrofit.create(PlaceholderClient.class);
-
-
-        ////////////////////////////
-
-        LoadImageAdapter loadImageAdapter = new LoadImageAdapter(getContext(), loadImagePresenter.getListImage(), this);
-        RecyclerView rvGallery = (RecyclerView) getActivity().findViewById(R.id.rvGallery);
+        rvGallery = (RecyclerView) getActivity().findViewById(R.id.rvGallery);
         rvGallery.setLayoutManager(new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false));
+
+        if (loadImageAdapter != null) {
+            rvGallery.setAdapter(loadImageAdapter);
+        }
+    }
+
+    @Override
+    public void loadNewData(List<Image> imageList) {
+        loadImageAdapter = new LoadImageAdapter(getContext(), imageList, GalleryFragment.this);
         rvGallery.setAdapter(loadImageAdapter);
     }
 
     @Override
-    public void shareElement(ImageView imageView, TextView textView) {
+    public void shareElement(ImageView imageView, TextView textView, Image image) {
         DetailFragment detailFragment = DetailFragment.newInstance();
         detailFragment.setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.transition_share_element));
 //        detailFragment.setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fade));
@@ -78,9 +75,12 @@ public class GalleryFragment extends Fragment implements LoadImage.View {
 
         Bundle bundle = new Bundle();
         bundle.putString(DetailFragment.TRANSITION_IMAGE, imageView.getTransitionName());
-        bundle.putParcelable(DetailFragment.BITMAP_KEY, ((BitmapDrawable) (imageView.getDrawable())).getBitmap());
         bundle.putString(DetailFragment.TRANSITION_CONTENT, textView.getTransitionName());
-        bundle.putString(DetailFragment.CONTENT_KEY, textView.getText().toString());
+
+//        bundle.putParcelable(DetailFragment.BITMAP_KEY, ((BitmapDrawable) (imageView.getDrawable())).getBitmap());
+        bundle.putString(DetailFragment.CONTENT_KEY, image.getContent());
+        bundle.putString("url", image.getLink());
+
         detailFragment.setArguments(bundle);
 
         getActivity().getSupportFragmentManager().beginTransaction()

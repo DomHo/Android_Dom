@@ -1,28 +1,41 @@
 package sg.vinova.dom.myapplication.model;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
+import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by HNS on 27/06/2017.
+ * Created by HNS on 29/06/2017.
  */
 
-public class Image extends RealmObject {
+public class Image {
 
-    @PrimaryKey
+    @SerializedName("albumId")
+    private int albumId;
+    @SerializedName("id")
     private int id;
+    @SerializedName("title")
     private String content;
-    private String directory;
+    @SerializedName("url")
     private String link;
+    @SerializedName("thumbnailUrl")
+    private String thumbnailUrl;
 
     public Image() {
     }
 
-    public Image(int id, String content, String directory, String link) {
+    public Image(int albumId, int id, String content, String link, String thumbnailUrl) {
+        this.albumId = albumId;
         this.id = id;
         this.content = content;
-        this.directory = directory;
         this.link = link;
+        this.thumbnailUrl = thumbnailUrl;
+    }
+
+    public int getAlbumId() {
+        return albumId;
+    }
+
+    public void setAlbumId(int albumId) {
+        this.albumId = albumId;
     }
 
     public int getId() {
@@ -41,19 +54,19 @@ public class Image extends RealmObject {
         this.content = content;
     }
 
-    public String getDirectory() {
-        return directory;
-    }
-
-    public void setDirectory(String directory) {
-        this.directory = directory;
-    }
-
     public String getLink() {
         return link;
     }
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
+    }
+
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
     }
 }

@@ -42,10 +42,12 @@ public class LoadImageAdapter extends RecyclerView.Adapter<LoadImageAdapter.View
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         Image image = imageList.get(position);
-        Glide.with(context).load(image.getLink()).into(holder.ivImage);
+        holder.tvId.setText(Integer.toString(image.getId()));
+        Glide.with(context).load(image.getThumbnailUrl()).into(holder.ivImage);
         holder.tvContent.setText(image.getContent());
+
         holder.cvItem.setAlpha(0);
-        holder.cvItem.animate().alpha(1.0f).setDuration(300).setStartDelay(position*2);
+        holder.cvItem.animate().alpha(1.0f).setDuration(300).setStartDelay(position * 2);
 
         holder.ivImage.setTransitionName("image" + position);
         holder.tvContent.setTransitionName("content" + position);
@@ -64,12 +66,13 @@ public class LoadImageAdapter extends RecyclerView.Adapter<LoadImageAdapter.View
     public void onClick(View view) {
         if (view instanceof LinearLayout) {
             LinearLayout v = (LinearLayout) view;
-            loadImageView.shareElement((ImageView) v.getChildAt(0), (TextView) v.getChildAt(1));
+            loadImageView.shareElement((ImageView) v.getChildAt(1), (TextView) v.getChildAt(2), imageList.get(Integer.parseInt(((TextView) v.getChildAt(0)).getText().toString()) - 1));
         }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        private TextView tvId;
         private ImageView ivImage;
         private TextView tvContent;
         private LinearLayout llItem;
@@ -77,6 +80,7 @@ public class LoadImageAdapter extends RecyclerView.Adapter<LoadImageAdapter.View
 
         public ViewHolder(View itemView) {
             super(itemView);
+            tvId = (TextView) itemView.findViewById(R.id.tvId);
             ivImage = (ImageView) itemView.findViewById(R.id.ivImage);
             tvContent = (TextView) itemView.findViewById(R.id.tvContent);
             llItem = (LinearLayout) itemView.findViewById(R.id.llItem);

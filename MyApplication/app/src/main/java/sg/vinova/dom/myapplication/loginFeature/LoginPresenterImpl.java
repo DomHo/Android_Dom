@@ -22,11 +22,10 @@ public class LoginPresenterImpl implements Login.Presenter {
             Account account = realm.where(Account.class).equalTo("username", username).findFirst();
             if (account == null)
                 loginView.onLoginFail("Account doesn't exist.");
+            else if (password.equals(account.getPassword()))
+                loginView.onLoginSuccess(username);
             else
-                if (password.equals(account.getPassword()))
-                    loginView.onLoginSuccess(username);
-                else
-                    loginView.onLoginFail("Wrong password.");
+                loginView.onLoginFail("Wrong password.");
             realm.close();
         }
     }
@@ -38,13 +37,13 @@ public class LoginPresenterImpl implements Login.Presenter {
         }
         if (password.length() < 1) {
             loginView.onLoginFail("Password is empty.");
-            return  false;
+            return false;
         }
-        if (username.contains(" ")){
+        if (username.contains(" ")) {
             loginView.onLoginFail("Username invalid: space");
             return false;
         }
-        if (username.contains(";")){
+        if (username.contains(";")) {
             loginView.onLoginFail("Username invalid: ;");
             return false;
         }

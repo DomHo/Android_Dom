@@ -1,6 +1,5 @@
 package sg.vinova.dom.myapplication.utils;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import sg.vinova.dom.myapplication.R;
 
@@ -49,8 +50,8 @@ public class DetailFragment extends Fragment {
         tvContent = (TextView) rootView.findViewById(R.id.tvContent);
         if (getArguments() != null) {
             ivImage.setTransitionName(getArguments().getString(TRANSITION_IMAGE, ""));
-            ivImage.setImageBitmap((Bitmap) getArguments().getParcelable(BITMAP_KEY));
             tvContent.setTransitionName(getArguments().getString(TRANSITION_CONTENT, ""));
+            Glide.with(getContext()).load(getArguments().getString("url", "")).into(ivImage);
             tvContent.setText(getArguments().getString(CONTENT_KEY, ""));
         }
     }
