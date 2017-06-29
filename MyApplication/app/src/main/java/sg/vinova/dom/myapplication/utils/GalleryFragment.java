@@ -14,10 +14,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import sg.vinova.dom.myapplication.R;
 import sg.vinova.dom.myapplication.loadImageFeature.LoadImage;
 import sg.vinova.dom.myapplication.adapter.LoadImageAdapter;
 import sg.vinova.dom.myapplication.loadImageFeature.LoadImagePresenterImpl;
+import sg.vinova.dom.myapplication.retrofit.PlaceholderClient;
 
 public class GalleryFragment extends Fragment implements LoadImage.View {
 
@@ -45,6 +48,18 @@ public class GalleryFragment extends Fragment implements LoadImage.View {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         loadImagePresenter = new LoadImagePresenterImpl(this);
+
+        ////////////
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl("https://jsonplaceholder.typicode.com/")
+                .addConverterFactory(GsonConverterFactory.create());
+
+        Retrofit retrofit = builder.build();
+
+        PlaceholderClient client = retrofit.create(PlaceholderClient.class);
+
+
+        ////////////////////////////
 
         LoadImageAdapter loadImageAdapter = new LoadImageAdapter(getContext(), loadImagePresenter.getListImage(), this);
         RecyclerView rvGallery = (RecyclerView) getActivity().findViewById(R.id.rvGallery);
