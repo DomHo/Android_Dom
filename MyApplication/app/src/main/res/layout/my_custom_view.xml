@@ -3,18 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:theme="@style/AppTheme.NoActionBar">
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/edtUsername"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:backgroundTint="@color/colorPrimary"
-        android:hint="@string/login_username"
+        android:hint="@string/login_hint_username"
         android:inputType="textEmailAddress"
-        android:maxLines="1"
         android:maxLength="50"
+        android:maxLines="1"
         android:textCursorDrawable="@color/colorPrimary"
         android:textSize="18sp">
 
@@ -27,43 +27,42 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:backgroundTint="@color/colorPrimary"
-        android:hint="@string/login_password"
+        android:hint="@string/login_hint_password"
         android:inputType="textPassword"
         android:maxLines="1"
         android:textCursorDrawable="@color/colorPrimary"
-        android:textSize="18sp"/>
+        android:textSize="18sp" />
 
     <CheckBox
         android:id="@+id/cbSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_gravity="center_horizontal"
         android:text="@string/login_save_account"
         android:textSize="20sp" />
 
     <TextView
         android:id="@+id/tvMessage"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:gravity="center_horizontal"
         android:textSize="20sp"
-        tools:text="noti"/>
+        tools:text="noti" />
 
     <LinearLayout
+
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnSignup"
             android:layout_width="105dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="30dp"
             android:text="@string/signup"
             android:textColor="#FFF"
-            android:textSize="20sp"
-            android:layout_marginRight="30dp"/>
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/btnLogin"
@@ -79,8 +78,7 @@
         android:id="@+id/btnGuest"
         android:layout_width="105dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/login_guest"
+        android:text="@string/guest"
         android:textColor="#FFF"
         android:textSize="20sp" />
 

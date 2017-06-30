@@ -10,10 +10,6 @@ import retrofit2.Response;
 import sg.vinova.dom.myapplication.ExampleAPI.PlaceholderServiceImpl;
 import sg.vinova.dom.myapplication.model.Image;
 
-/**
- * Created by HNS on 26/06/2017.
- */
-
 public class LoadImagePresenterImpl implements LoadImage.Presenter {
 
     private LoadImage.View loadimageView;

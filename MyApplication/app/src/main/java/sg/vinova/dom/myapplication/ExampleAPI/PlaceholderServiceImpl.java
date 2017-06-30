@@ -7,10 +7,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.vinova.dom.myapplication.model.Image;
 
-/**
- * Created by HNS on 29/06/2017.
- */
-
 public class PlaceholderServiceImpl implements PlaceholderService {
     @Override
     public Call<List<Image>> getImages() {

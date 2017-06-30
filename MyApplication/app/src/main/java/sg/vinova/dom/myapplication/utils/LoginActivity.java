@@ -29,12 +29,13 @@ import sg.vinova.dom.myapplication.R;
 public class LoginActivity extends AppCompatActivity implements Login.View, View.OnClickListener {
 
     private LoginPresenterImpl loginPresenter;
-    MyCustomView myCustomView;
 
-    private FrameLayout flSignup;
-    private LinearLayout layoutButtons;
     private ConstraintLayout clLogin;
+    MyCustomView myCustomView;
+    private FrameLayout flSignup;
+    private LinearLayout llSignup;
     private Button btnSingup1;
+
     private boolean flag;
 
     @Override
@@ -45,29 +46,17 @@ public class LoginActivity extends AppCompatActivity implements Login.View, View
         loginPresenter = new LoginPresenterImpl(this);
         findViewById(R.id.ivLogin).startAnimation(AnimationUtils.loadAnimation(this, R.anim.blink));
 
-        myCustomView = (MyCustomView) findViewById(R.id.mcvUsername);
-
-
         clLogin = (ConstraintLayout) findViewById(R.id.clLogin);
+        myCustomView = (MyCustomView) findViewById(R.id.mcvLogin);
         flSignup = (FrameLayout) findViewById(R.id.flSignup);
-        layoutButtons = (LinearLayout) findViewById(R.id.layoutButtons);
+        llSignup = (LinearLayout) findViewById(R.id.llSignup);
+        btnSingup1 = (Button) findViewById(R.id.btnSingup1);
 
         myCustomView.btnSignup.setOnClickListener(this);
-        btnSingup1 = (Button) findViewById(R.id.btnSingup1);
+        myCustomView.btnLogin.setOnClickListener(this);
+        myCustomView.btnGuest.setOnClickListener(this);
         btnSingup1.setOnClickListener(this);
-        myCustomView.btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginPresenter.logIn(myCustomView.getUsername(), myCustomView.getPassword());
-                Log.i("Login Activity", "Log in.");
-            }
-        });
-        myCustomView.btnGuest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onLoginSuccess("Guest");
-            }
-        });
+        flag = false;
     }
 
     @Override
@@ -81,10 +70,8 @@ public class LoginActivity extends AppCompatActivity implements Login.View, View
     @Override
     public void onLoginSuccess(String username) {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("welcome", "Hello " + username);
+        intent.putExtra("Welcome", "Hello " + username);
         startActivity(intent);
-
-
         finish();
     }
 
@@ -95,9 +82,18 @@ public class LoginActivity extends AppCompatActivity implements Login.View, View
 
     @Override
     public void onClick(View view) {
+        if (view.getId() == R.id.btnLogin) {
+            loginPresenter.logIn(myCustomView.getUsername(), myCustomView.getPassword());
+            Log.i("Login Activity", "Log in.");
+            return;
+        }
+        if (view.getId() == R.id.btnGuest) {
+            onLoginSuccess("Guest");
+            return;
+        }
 
         if (view.getId() == R.id.btnSingup1) {
-            // Write new account to database
+            // Sign up new account.
         }
 
         int x = view.getLeft() + ((view.getRight() - view.getLeft()) / 2);
@@ -105,18 +101,18 @@ public class LoginActivity extends AppCompatActivity implements Login.View, View
 
         int hypotenuse = (int) Math.hypot(clLogin.getWidth(), clLogin.getHeight());
 
-        if (!flag) {
-            Animator anim = ViewAnimationUtils.createCircularReveal(flSignup, x, y, 0, hypotenuse);
-            anim.setDuration(700);
+        Animator anim = ViewAnimationUtils.createCircularReveal(flSignup, x, y, 0, hypotenuse);
+        anim.setDuration(700);
 
+        if (!flag) {
             flSignup.setVisibility(View.VISIBLE);
             anim.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animator) {
                     AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
                     alphaAnimation.setDuration(700);
-                    layoutButtons.setVisibility(View.VISIBLE);
-                    layoutButtons.startAnimation(alphaAnimation);
+                    llSignup.setVisibility(View.VISIBLE);
+                    llSignup.startAnimation(alphaAnimation);
                 }
 
                 @Override
@@ -136,15 +132,13 @@ public class LoginActivity extends AppCompatActivity implements Login.View, View
             });
             anim.start();
         } else {
-            Animator anim = ViewAnimationUtils.createCircularReveal(flSignup, x, y, hypotenuse, 0);
-            anim.setDuration(700);
             anim.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animator) {
                     AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
                     alphaAnimation.setDuration(700);
-                    layoutButtons.setVisibility(View.GONE);
-                    layoutButtons.startAnimation(alphaAnimation);
+                    llSignup.setVisibility(View.GONE);
+                    llSignup.startAnimation(alphaAnimation);
                 }
 
                 @Override

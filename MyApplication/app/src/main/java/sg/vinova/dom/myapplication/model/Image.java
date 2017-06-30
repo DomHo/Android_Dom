@@ -2,10 +2,6 @@ package sg.vinova.dom.myapplication.model;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by HNS on 29/06/2017.
- */
-
 public class Image {
 
     @SerializedName("albumId")

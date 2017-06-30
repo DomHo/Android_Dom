@@ -3,10 +3,6 @@ package sg.vinova.dom.myapplication.model;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-/**
- * Created by HNS on 26/06/2017.
- */
-
 public class Account extends RealmObject {
 
     @PrimaryKey
