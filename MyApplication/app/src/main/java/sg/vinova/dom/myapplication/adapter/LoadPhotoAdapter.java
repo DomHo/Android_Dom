@@ -43,7 +43,7 @@ public class LoadPhotoAdapter extends RecyclerView.Adapter<LoadPhotoAdapter.View
         holder.tvTitle.setText(photo.getTitle());
 
         holder.cvItem.setAlpha(0);
-        holder.cvItem.animate().alpha(1.0f).setDuration(300).setStartDelay(position/3);
+        holder.cvItem.animate().alpha(1.0f).setDuration(300).setStartDelay(position / 3);
 
         holder.ivPhoto.setTransitionName("Photo" + position);
         holder.tvTitle.setTransitionName("Title" + position);

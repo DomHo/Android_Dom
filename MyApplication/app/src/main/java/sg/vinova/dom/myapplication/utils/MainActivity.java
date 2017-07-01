@@ -1,6 +1,8 @@
 package sg.vinova.dom.myapplication.utils;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -11,14 +13,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import sg.vinova.dom.myapplication.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +31,9 @@ public class MainActivity extends AppCompatActivity
 
         Toast.makeText(this, getIntent().getStringExtra("Welcome"), Toast.LENGTH_LONG).show();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle(R.string.nav_gallery);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -41,7 +46,6 @@ public class MainActivity extends AppCompatActivity
 
         navigationView.setCheckedItem(R.id.nav_gallery);
         navigationView.getMenu().performIdentifierAction(R.id.nav_gallery, 0);
-        toolbar.setTitle(R.string.nav_gallery);
     }
 
     @Override
@@ -106,9 +110,12 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.nav_gallery:
                 getSupportFragmentManager().beginTransaction().replace(R.id.flMain, GalleryFragment.newInstance()).commitAllowingStateLoss();
+                toolbar.setTitle(R.string.nav_gallery);
                 break;
             case R.id.nav_weather:
-                //
+                Intent intent = new Intent(this, WeatherActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.switch_main_weather_left_in, R.anim.switch_main_weather_left_out);
                 break;
             case R.id.nav_share:
                 //

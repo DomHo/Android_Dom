@@ -17,4 +17,6 @@
 
     <string name="nav_gallery">Gallery</string>
     <string name="nav_weather">Weather</string>
+    <string name="title_activity_weather">WeatherActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>
