@@ -20,14 +20,14 @@
             android:visibility="gone" />
 
         <ImageView
-            android:id="@+id/ivImage"
+            android:id="@+id/ivPhoto"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop" />
 
         <TextView
-            android:id="@+id/tvContent"
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"

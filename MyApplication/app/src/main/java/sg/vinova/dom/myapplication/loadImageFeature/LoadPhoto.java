@@ -5,13 +5,13 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import sg.vinova.dom.myapplication.model.Image;
+import sg.vinova.dom.myapplication.model.Photo;
 
-public interface LoadImage {
+public interface LoadPhoto {
     interface View {
-        void loadNewData(List<Image> imageList);
+        void loadNewData(List<Photo> photoList);
 
-        void shareElement(ImageView imageView, TextView textView, Image image);
+        void shareElement(ImageView imageView, TextView textView, Photo photo);
     }
 
     interface Presenter {

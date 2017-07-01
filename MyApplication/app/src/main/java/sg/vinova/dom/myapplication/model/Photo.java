@@ -2,27 +2,27 @@ package sg.vinova.dom.myapplication.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Image {
+public class Photo {
 
     @SerializedName("albumId")
     private int albumId;
     @SerializedName("id")
     private int id;
     @SerializedName("title")
-    private String content;
+    private String title;
     @SerializedName("url")
-    private String link;
+    private String url;
     @SerializedName("thumbnailUrl")
     private String thumbnailUrl;
 
-    public Image() {
+    public Photo() {
     }
 
-    public Image(int albumId, int id, String content, String link, String thumbnailUrl) {
+    public Photo(int albumId, int id, String title, String url, String thumbnailUrl) {
         this.albumId = albumId;
         this.id = id;
-        this.content = content;
-        this.link = link;
+        this.title = title;
+        this.url = url;
         this.thumbnailUrl = thumbnailUrl;
     }
 
@@ -42,20 +42,20 @@ public class Image {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
+    public String getTitle() {
+        return title;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getLink() {
-        return link;
+    public String getUrl() {
+        return url;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getThumbnailUrl() {

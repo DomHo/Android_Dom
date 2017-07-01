@@ -15,18 +15,18 @@ import android.widget.TextView;
 import java.util.List;
 
 import sg.vinova.dom.myapplication.R;
-import sg.vinova.dom.myapplication.loadImageFeature.LoadImage;
-import sg.vinova.dom.myapplication.adapter.LoadImageAdapter;
-import sg.vinova.dom.myapplication.loadImageFeature.LoadImagePresenterImpl;
-import sg.vinova.dom.myapplication.model.Image;
+import sg.vinova.dom.myapplication.loadImageFeature.LoadPhoto;
+import sg.vinova.dom.myapplication.adapter.LoadPhotoAdapter;
+import sg.vinova.dom.myapplication.loadImageFeature.LoadPhotoPresenterImpl;
+import sg.vinova.dom.myapplication.model.Photo;
 
-public class GalleryFragment extends Fragment implements LoadImage.View {
+public class GalleryFragment extends Fragment implements LoadPhoto.View {
 
-    private LoadImagePresenterImpl loadImagePresenter;
+    private LoadPhotoPresenterImpl loadPhotoPresenter;
 
     View rootView;
     RecyclerView rvGallery;
-    LoadImageAdapter loadImageAdapter = null;
+    LoadPhotoAdapter loadPhotoAdapter = null;
 
     public static GalleryFragment newInstance() {
         return new GalleryFragment();
@@ -35,8 +35,8 @@ public class GalleryFragment extends Fragment implements LoadImage.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadImagePresenter = new LoadImagePresenterImpl(this);
-        loadImagePresenter.getNewData();
+        loadPhotoPresenter = new LoadPhotoPresenterImpl(this);
+        loadPhotoPresenter.getNewData();
     }
 
     @Override
@@ -53,33 +53,32 @@ public class GalleryFragment extends Fragment implements LoadImage.View {
         rvGallery = (RecyclerView) getActivity().findViewById(R.id.rvGallery);
         rvGallery.setLayoutManager(new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false));
 
-        if (loadImageAdapter != null) {
-            rvGallery.setAdapter(loadImageAdapter);
+        if (loadPhotoAdapter != null) {
+            rvGallery.setAdapter(loadPhotoAdapter);
         }
     }
 
     @Override
-    public void loadNewData(List<Image> imageList) {
-        loadImageAdapter = new LoadImageAdapter(getContext(), imageList, GalleryFragment.this);
-        rvGallery.setAdapter(loadImageAdapter);
+    public void loadNewData(List<Photo> photoList) {
+        loadPhotoAdapter = new LoadPhotoAdapter(getContext(), photoList, GalleryFragment.this);
+        rvGallery.setAdapter(loadPhotoAdapter);
     }
 
     @Override
-    public void shareElement(ImageView imageView, TextView textView, Image image) {
+    public void shareElement(ImageView imageView, TextView textView, Photo photo) {
+        setSharedElementReturnTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.transition_share_element));
+//        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fade));
+
         DetailFragment detailFragment = DetailFragment.newInstance();
         detailFragment.setSharedElementEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.transition_share_element));
 //        detailFragment.setEnterTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fade));
 
-        setSharedElementReturnTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.transition_share_element));
-//        setExitTransition(TransitionInflater.from(getContext()).inflateTransition(R.transition.fade));
-
         Bundle bundle = new Bundle();
-        bundle.putString(DetailFragment.TRANSITION_IMAGE, imageView.getTransitionName());
-        bundle.putString(DetailFragment.TRANSITION_CONTENT, textView.getTransitionName());
+        bundle.putString(DetailFragment.TRANSITION_PHOTO, imageView.getTransitionName());
+        bundle.putString(DetailFragment.TRANSITION_TITLE, textView.getTransitionName());
 
-//        bundle.putParcelable(DetailFragment.BITMAP_KEY, ((BitmapDrawable) (imageView.getDrawable())).getBitmap());
-        bundle.putString(DetailFragment.CONTENT_KEY, image.getContent());
-        bundle.putString("url", image.getLink());
+        bundle.putString(DetailFragment.URL_KEY, photo.getUrl());
+        bundle.putString(DetailFragment.TITLE_KEY, photo.getTitle());
 
         detailFragment.setArguments(bundle);
 

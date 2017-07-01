@@ -4,10 +4,10 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import sg.vinova.dom.myapplication.model.Image;
+import sg.vinova.dom.myapplication.model.Photo;
 
 public interface PlaceholderService {
 
     @GET("photos")
-    Call<List<Image>> getImages();
+    Call<List<Photo>> getPhotos();
 }
