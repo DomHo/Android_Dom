@@ -10,18 +10,19 @@
         android:id="@+id/ivBackgroundToday"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@drawable/bg_main_example"
         android:scaleX="2.0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:background="#58e4fc" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:paddingTop="@dimen/toolbar_activity_weather"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -32,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
-            android:textSize="30sp"
+            android:textSize="25sp"
             tools:text="Thành phố Hồ Chí Minh" />
 
         <TextView
@@ -40,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
-            android:textSize="25sp"
+            android:textSize="20sp"
             tools:text="T.4, 28 Tháng 6" />
 
         <LinearLayout
@@ -51,13 +52,16 @@
 
             <ImageView
                 android:id="@+id/ivToday"
-                android:layout_width="100dp"
-                android:layout_height="match_parent" />
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image_ivtoday" />
 
             <TextView
                 android:id="@+id/tvTempMid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
                 android:textColor="#FFF"
                 android:textSize="20sp"
                 tools:text="30" />
@@ -72,12 +76,13 @@
                     android:id="@+id/tvTempMax"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:textColor="#FFF"
                     android:textSize="20sp"
                     tools:text="32" />
 
                 <TextView
-                    android:id="@+id/TempMin"
+                    android:id="@+id/tvTempMin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#FFF"
@@ -88,59 +93,28 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvToday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            tools:text="Ít mây" />
+
+      <!--  <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="250dp">
 
-        </LinearLayout>
+        </LinearLayout>-->
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvWeather"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.0">
+            android:layout_weight="1.0"
+            android:background="#8deda85e">
 
         </android.support.v7.widget.RecyclerView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="24dp"
-            android:orientation="horizontal"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:background="#867b7a7a">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@drawable/ic_sun"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="AccuWeather"
-                android:textColor="#FFFFFF"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvNow"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1.0"
-                android:gravity="center_vertical|end"
-                tools:text="Updated"
-                android:textColor="#FFFFFF"/>
-
-            <Button
-                android:id="@+id/btnRefresh"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:width="10dp"
-                android:background="@drawable/ic_refresh_state"/>
-
-        </LinearLayout>
-
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

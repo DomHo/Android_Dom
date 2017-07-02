@@ -1,4 +1,4 @@
-package sg.vinova.dom.myapplication.loadImageFeature;
+package sg.vinova.dom.myapplication.loadPhotoFeature;
 
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +12,8 @@ public interface LoadPhoto {
         void loadNewData(List<Photo> photoList);
 
         void shareElement(ImageView imageView, TextView textView, Photo photo);
+
+        void error(String message);
     }
 
     interface Presenter {

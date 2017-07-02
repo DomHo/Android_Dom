@@ -2,6 +2,7 @@ package sg.vinova.dom.myapplication.utils;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,15 +10,17 @@ import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
 import sg.vinova.dom.myapplication.R;
-import sg.vinova.dom.myapplication.loadImageFeature.LoadPhoto;
+import sg.vinova.dom.myapplication.loadPhotoFeature.LoadPhoto;
 import sg.vinova.dom.myapplication.adapter.LoadPhotoAdapter;
-import sg.vinova.dom.myapplication.loadImageFeature.LoadPhotoPresenterImpl;
+import sg.vinova.dom.myapplication.loadPhotoFeature.LoadPhotoPresenterImpl;
 import sg.vinova.dom.myapplication.model.Photo;
 
 public class GalleryFragment extends Fragment implements LoadPhoto.View {
@@ -35,7 +38,7 @@ public class GalleryFragment extends Fragment implements LoadPhoto.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadPhotoPresenter = new LoadPhotoPresenterImpl(this);
+        loadPhotoPresenter = new LoadPhotoPresenterImpl(getActivity().getApplicationContext(), this);
         loadPhotoPresenter.getNewData();
     }
 
@@ -52,6 +55,13 @@ public class GalleryFragment extends Fragment implements LoadPhoto.View {
 
         rvGallery = (RecyclerView) rootView.findViewById(R.id.rvGallery);
         rvGallery.setLayoutManager(new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false));
+        FloatingActionButton fabGallery = (FloatingActionButton) rootView.findViewById(R.id.fabGallery);
+        fabGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadPhotoPresenter.getNewData();
+            }
+        });
 
         if (loadPhotoAdapter != null) {
             rvGallery.setAdapter(loadPhotoAdapter);
@@ -87,5 +97,10 @@ public class GalleryFragment extends Fragment implements LoadPhoto.View {
                 .addSharedElement(imageView, imageView.getTransitionName())
                 .addSharedElement(textView, textView.getTransitionName())
                 .addToBackStack("Gallery - Share Element").commit();
+    }
+
+    @Override
+    public void error(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 }

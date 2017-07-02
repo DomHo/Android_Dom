@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
 public class Minimum {
     @SerializedName("Value")
     @Expose
-    private Integer value;
+    private Double value;
     @SerializedName("Unit")
     @Expose
     private String unit;
@@ -18,11 +18,11 @@ public class Minimum {
     @Expose
     private Integer unitType;
 
-    public Integer getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 

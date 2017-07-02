@@ -1,10 +1,9 @@
 package sg.vinova.dom.myapplication.utils;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
@@ -24,18 +23,26 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import sg.vinova.dom.myapplication.R;
+import sg.vinova.dom.myapplication.WeatherForecastFeature.WeatherForecast;
+import sg.vinova.dom.myapplication.WeatherForecastFeature.WeatherForecastImpl;
+import sg.vinova.dom.myapplication.adapter.WeatherForecastAdapter;
+import sg.vinova.dom.myapplication.model.Weather.DailyForecast;
+import sg.vinova.dom.myapplication.model.Weather.Weather;
 
-public class WeatherActivity extends AppCompatActivity {
+public class WeatherActivity extends AppCompatActivity implements WeatherForecast.View {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     private ViewPager mViewPager;
+    WeatherForecastImpl weatherForecastPresenter;
+
+    TextView tvNow;
+    Button btnRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +59,18 @@ public class WeatherActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        btnRefresh = (Button) findViewById(R.id.btnRefresh);
+        tvNow = (TextView) findViewById(R.id.tvNow);
+
+        weatherForecastPresenter = new WeatherForecastImpl(getApplicationContext(), this);
+        weatherForecastPresenter.updateWeather();
+        btnRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                weatherForecastPresenter.updateWeather();
+            }
+        });
     }
 
     @Override
@@ -80,6 +99,51 @@ public class WeatherActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void updateWeatherResult(String message) {
+        tvNow.setText(message);
+    }
+
+    @Override
+    public void loadData(Weather weather, Calendar calendar) {
+        DailyForecast today = weather.getDailyForecasts().get(0);
+
+        TextView tvLocation = (TextView) findViewById(R.id.tvLocation);
+        TextView tvDate = (TextView) findViewById(R.id.tvDate);
+        ImageView ivToday = (ImageView) findViewById(R.id.ivToday);
+        TextView tvTempMid = (TextView) findViewById(R.id.tvTempMid);
+        TextView tvTempMax = (TextView) findViewById(R.id.tvTempMax);
+        TextView tvTempMin = (TextView) findViewById(R.id.tvTempMin);
+        TextView tvToday = (TextView) findViewById(R.id.tvToday);
+
+        tvLocation.setText("Thành phố Hồ Chí Minh");
+        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+            tvDate.setText("CN, " + calendar.get(Calendar.DAY_OF_MONTH) + " Tháng " + calendar.get(Calendar.MONTH));
+        else
+            tvDate.setText("T." + calendar.get(Calendar.DAY_OF_WEEK) + ", " + calendar.get(Calendar.DAY_OF_MONTH) + " Tháng " + calendar.get(Calendar.MONTH));
+
+        int max = today.getTemperature().getMaximum().getValue().intValue();
+        int min = today.getTemperature().getMinimum().getValue().intValue();
+        int mid = (max + min) / 2;
+        tvTempMax.setText(Integer.toString(max) + (char) 0x00B0 + "");
+        tvTempMin.setText(Integer.toString(min) + (char) 0x00B0 + "");
+        tvTempMid.setText(Integer.toString(mid) + (char) 0x00B0 + "C");
+        if (calendar.get(Calendar.HOUR_OF_DAY) < 12) {
+            ivToday.setImageLevel(2);
+            tvToday.setText(today.getDay().getIconPhrase());
+        } else {
+            ivToday.setImageLevel(today.getNight().getIcon());
+            tvToday.setText(today.getNight().getIconPhrase());
+        }
+
+        List<DailyForecast> dailyForecastList = weather.getDailyForecasts();
+        dailyForecastList.remove(0);
+        RecyclerView rvWeather = (RecyclerView) findViewById(R.id.rvWeather);
+        rvWeather.setLayoutManager(new GridLayoutManager(getApplicationContext(), 4, GridLayoutManager.VERTICAL, false));
+        WeatherForecastAdapter weatherForecastAdapter = new WeatherForecastAdapter(getApplicationContext(), dailyForecastList, calendar);
+        rvWeather.setAdapter(weatherForecastAdapter);
     }
 
     /**
@@ -123,13 +187,13 @@ public class WeatherActivity extends AppCompatActivity {
             DisplayMetrics displayMetrics = new DisplayMetrics();
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             final int width = displayMetrics.widthPixels;
-            final ImageView ivToday = (ImageView) rootView.findViewById(R.id.ivToday);
+            final ImageView ivBackgroundToday = (ImageView) rootView.findViewById(R.id.ivBackgroundToday);
 
             TranslateAnimation animation1 = new TranslateAnimation(0, width / 2, 0, 0);
-            animation1.setDuration(3000);
+            animation1.setDuration(5000);
             animation1.setStartOffset(3000);
             final TranslateAnimation animation2 = new TranslateAnimation(width / 2, -width / 2, 0, 0);
-            animation2.setDuration(6000);
+            animation2.setDuration(10000);
             animation2.setRepeatMode(Animation.REVERSE);
             animation2.setRepeatCount(Animation.INFINITE);
 
@@ -141,7 +205,7 @@ public class WeatherActivity extends AppCompatActivity {
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    ivToday.startAnimation(animation2);
+                    ivBackgroundToday.startAnimation(animation2);
                 }
 
                 @Override
@@ -149,49 +213,9 @@ public class WeatherActivity extends AppCompatActivity {
 
                 }
             });
-            ivToday.startAnimation(animation1);
-
-//            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            Button btnRefresh = (Button) rootView.findViewById(R.id.btnRefresh);
-            final TextView tvNow = (TextView) rootView.findViewById(R.id.tvNow);
-            final Calendar[] calendar = {null};
-            final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-
-            if (isOnline() == 0) {
-                calendar[0] = Calendar.getInstance();
-                tvNow.setText(getString(R.string.time_now_format, sdf.format(calendar[0].getTime())));
-            } else if (isOnline() == 1) {
-                Toast.makeText(getContext(), "Network unavailable", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(getContext(), "Network error", Toast.LENGTH_LONG).show();
-            }
-            btnRefresh.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    calendar[0] = Calendar.getInstance();
-                    tvNow.setText(getString(R.string.time_now_format, sdf.format(calendar[0].getTime())));
-                }
-            });
+            ivBackgroundToday.startAnimation(animation1);
 
 
-
-
-
-
-
-
-
-
-        }
-
-        public int isOnline() {
-            ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo netInfo = cm.getActiveNetworkInfo();
-            if (netInfo == null)
-                return 1;
-            if (!netInfo.isAvailable())
-                return 2;
-            return 0;
         }
     }
 

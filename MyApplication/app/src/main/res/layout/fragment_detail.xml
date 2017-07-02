@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
     android:orientation="vertical"
+    android:theme="@style/NoBackgroundTheme"
     tools:context="sg.vinova.dom.myapplication.utils.DetailFragment">
 
     <ImageView

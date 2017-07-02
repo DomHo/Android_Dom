@@ -9,7 +9,7 @@ import java.util.List;
  * Created by HNS on 02/07/2017.
  */
 
-public class Example {
+public class Weather {
     @SerializedName("Headline")
     @Expose
     private Headline headline;

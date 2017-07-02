@@ -6,6 +6,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.vinova.dom.myapplication.model.Photo;
+import sg.vinova.dom.myapplication.model.Weather.Weather;
 import sg.vinova.dom.myapplication.photoAPI.PlaceholderService;
 
 /**
@@ -14,13 +15,13 @@ import sg.vinova.dom.myapplication.photoAPI.PlaceholderService;
 
 public class AccuWeatherServiceImpl implements AccuWeatherService {
     @Override
-    public Call<List<Photo>> getPhotos() {
+    public Call<Weather> getWeather() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://jsonplaceholder.typicode.com/")
+                .baseUrl("http://dataservice.accuweather.com/forecasts/v1/daily/5day/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        PlaceholderService service = retrofit.create(PlaceholderService.class);
-        return service.getPhotos();
+        AccuWeatherService service = retrofit.create(AccuWeatherService.class);
+        return service.getWeather();
     }
 }

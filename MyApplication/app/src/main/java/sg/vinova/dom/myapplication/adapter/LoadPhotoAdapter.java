@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import sg.vinova.dom.myapplication.R;
-import sg.vinova.dom.myapplication.loadImageFeature.LoadPhoto;
+import sg.vinova.dom.myapplication.loadPhotoFeature.LoadPhoto;
 import sg.vinova.dom.myapplication.model.Photo;
 
 public class LoadPhotoAdapter extends RecyclerView.Adapter<LoadPhotoAdapter.ViewHolder> implements View.OnClickListener {
