@@ -50,7 +50,7 @@ public class GalleryFragment extends Fragment implements LoadPhoto.View {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        rvGallery = (RecyclerView) getActivity().findViewById(R.id.rvGallery);
+        rvGallery = (RecyclerView) rootView.findViewById(R.id.rvGallery);
         rvGallery.setLayoutManager(new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false));
 
         if (loadPhotoAdapter != null) {

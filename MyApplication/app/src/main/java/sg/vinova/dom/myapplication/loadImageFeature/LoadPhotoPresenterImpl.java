@@ -7,7 +7,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import sg.vinova.dom.myapplication.ExampleAPI.PlaceholderServiceImpl;
+import sg.vinova.dom.myapplication.photoAPI.PlaceholderServiceImpl;
 import sg.vinova.dom.myapplication.model.Photo;
 
 public class LoadPhotoPresenterImpl implements LoadPhoto.Presenter {
@@ -30,7 +30,7 @@ public class LoadPhotoPresenterImpl implements LoadPhoto.Presenter {
 
             @Override
             public void onFailure(Call<List<Photo>> call, Throwable t) {
-                Log.e("ExampleAPI", t.toString());
+                Log.e("photoAPI", t.toString());
             }
         });
     }

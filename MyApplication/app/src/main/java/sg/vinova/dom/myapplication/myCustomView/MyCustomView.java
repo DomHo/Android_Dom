@@ -1,4 +1,4 @@
-package sg.vinova.dom.myapplication.MyCustomView;
+package sg.vinova.dom.myapplication.myCustomView;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

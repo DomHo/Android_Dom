@@ -1,4 +1,4 @@
-package sg.vinova.dom.myapplication.ExampleAPI;
+package sg.vinova.dom.myapplication.photoAPI;
 
 import java.util.List;
 

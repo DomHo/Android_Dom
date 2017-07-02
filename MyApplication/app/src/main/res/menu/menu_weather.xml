@@ -3,10 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="sg.vinova.dom.myapplication.utils.WeatherActivity">
     <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/action_list"
         android:icon="@drawable/ic_action_list"
         android:title="@string/action_list"
@@ -15,5 +11,10 @@
         android:id="@+id/action_add"
         android:icon="@drawable/ic_action_add"
         android:title="@string/action_add"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_action_settings"
+        android:title="@string/action_settings"
         app:showAsAction="always" />
 </menu>

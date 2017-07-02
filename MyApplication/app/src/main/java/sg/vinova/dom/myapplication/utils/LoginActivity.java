@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import sg.vinova.dom.myapplication.MyCustomView.MyCustomView;
+import sg.vinova.dom.myapplication.myCustomView.MyCustomView;
 import sg.vinova.dom.myapplication.loginFeature.Login;
 import sg.vinova.dom.myapplication.loginFeature.LoginPresenterImpl;
 import sg.vinova.dom.myapplication.R;

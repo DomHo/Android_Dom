@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Toolbar toolbar;
+    int current;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle(R.string.nav_gallery);
+        getSupportActionBar().setTitle("");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -55,7 +56,14 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         else
             super.onBackPressed();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setCheckedItem(current);
+        navigationView.getMenu().performIdentifierAction(current, 0);
     }
 
     @Override
@@ -109,6 +117,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
             case R.id.nav_gallery:
+                current = R.id.nav_gallery;
                 getSupportFragmentManager().beginTransaction().replace(R.id.flMain, GalleryFragment.newInstance()).commitAllowingStateLoss();
                 toolbar.setTitle(R.string.nav_gallery);
                 break;
