@@ -15,14 +15,10 @@ import java.util.List;
 import sg.vinova.dom.myapplication.R;
 import sg.vinova.dom.myapplication.model.Weather.DailyForecast;
 
-/**
- * Created by HNS on 03/07/2017.
- */
-
 public class WeatherForecastAdapter extends RecyclerView.Adapter<WeatherForecastAdapter.ViewHolder> {
 
     private Context context;
-    private List<DailyForecast> dailyForecastList;
+    private List<DailyForecast> dailyForecastList = null;
     private Calendar calendar;
 
     public WeatherForecastAdapter(Context context, List<DailyForecast> dailyForecastList, Calendar calendar) {
@@ -40,23 +36,29 @@ public class WeatherForecastAdapter extends RecyclerView.Adapter<WeatherForecast
     public void onBindViewHolder(ViewHolder holder, int position) {
         DailyForecast dailyForecast = dailyForecastList.get(position);
         calendar.add(Calendar.DAY_OF_WEEK, 1);
-        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+        int day_of_week = calendar.get(Calendar.DAY_OF_WEEK);
+        if (day_of_week == Calendar.SUNDAY)
             holder.tvDayItem.setText("CN");
         else
-            holder.tvDayItem.setText(calendar.get(Calendar.DAY_OF_WEEK));
+            holder.tvDayItem.setText( "T." + day_of_week);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM");
         holder.tvDateItem.setText(sdf.format(calendar.getTime()));
         holder.ivTodayItem.setImageLevel(dailyForecast.getDay().getIcon());
-        int max = dailyForecast.getTemperature().getMaximum().getValue().intValue();
-        int min = dailyForecast.getTemperature().getMinimum().getValue().intValue();
-        holder.tvMaxMin.setText(max + (char) 0x00B0 + "/" + min + (char) 0x00B0);
-        holder.tvWater.setText(dailyForecast.getDay().getPrecipitationProbability());
-
+        String max = Integer.toString(dailyForecast.getTemperature().getMaximum().getValue().intValue()) + (char) 0x00B0;
+        String min = Integer.toString(dailyForecast.getTemperature().getMinimum().getValue().intValue()) + (char) 0x00B0;
+        holder.tvMaxMin.setText(max + "/" + min);
+        if (dailyForecast.getDay().getPrecipitationProbability() != null)
+            holder.tvWater.setText(dailyForecast.getDay().getPrecipitationProbability() + "%");
+        else
+            holder.tvWater.setText("N/A");
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        if (dailyForecastList != null)
+            return dailyForecastList.size();
+        else
+            return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -34,14 +34,14 @@ import sg.vinova.dom.myapplication.adapter.WeatherForecastAdapter;
 import sg.vinova.dom.myapplication.model.Weather.DailyForecast;
 import sg.vinova.dom.myapplication.model.Weather.Weather;
 
-public class WeatherActivity extends AppCompatActivity implements WeatherForecast.View {
+public class WeatherActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     private ViewPager mViewPager;
-    WeatherForecastImpl weatherForecastPresenter;
+    static WeatherForecastImpl weatherForecastPresenter;
 
-    TextView tvNow;
+    static TextView tvNow;
     Button btnRefresh;
 
     @Override
@@ -63,8 +63,6 @@ public class WeatherActivity extends AppCompatActivity implements WeatherForecas
         btnRefresh = (Button) findViewById(R.id.btnRefresh);
         tvNow = (TextView) findViewById(R.id.tvNow);
 
-        weatherForecastPresenter = new WeatherForecastImpl(getApplicationContext(), this);
-        weatherForecastPresenter.updateWeather();
         btnRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,55 +99,10 @@ public class WeatherActivity extends AppCompatActivity implements WeatherForecas
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void updateWeatherResult(String message) {
-        tvNow.setText(message);
-    }
-
-    @Override
-    public void loadData(Weather weather, Calendar calendar) {
-        DailyForecast today = weather.getDailyForecasts().get(0);
-
-        TextView tvLocation = (TextView) findViewById(R.id.tvLocation);
-        TextView tvDate = (TextView) findViewById(R.id.tvDate);
-        ImageView ivToday = (ImageView) findViewById(R.id.ivToday);
-        TextView tvTempMid = (TextView) findViewById(R.id.tvTempMid);
-        TextView tvTempMax = (TextView) findViewById(R.id.tvTempMax);
-        TextView tvTempMin = (TextView) findViewById(R.id.tvTempMin);
-        TextView tvToday = (TextView) findViewById(R.id.tvToday);
-
-        tvLocation.setText("Thành phố Hồ Chí Minh");
-        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
-            tvDate.setText("CN, " + calendar.get(Calendar.DAY_OF_MONTH) + " Tháng " + calendar.get(Calendar.MONTH));
-        else
-            tvDate.setText("T." + calendar.get(Calendar.DAY_OF_WEEK) + ", " + calendar.get(Calendar.DAY_OF_MONTH) + " Tháng " + calendar.get(Calendar.MONTH));
-
-        int max = today.getTemperature().getMaximum().getValue().intValue();
-        int min = today.getTemperature().getMinimum().getValue().intValue();
-        int mid = (max + min) / 2;
-        tvTempMax.setText(Integer.toString(max) + (char) 0x00B0 + "");
-        tvTempMin.setText(Integer.toString(min) + (char) 0x00B0 + "");
-        tvTempMid.setText(Integer.toString(mid) + (char) 0x00B0 + "C");
-        if (calendar.get(Calendar.HOUR_OF_DAY) < 12) {
-            ivToday.setImageLevel(2);
-            tvToday.setText(today.getDay().getIconPhrase());
-        } else {
-            ivToday.setImageLevel(today.getNight().getIcon());
-            tvToday.setText(today.getNight().getIconPhrase());
-        }
-
-        List<DailyForecast> dailyForecastList = weather.getDailyForecasts();
-        dailyForecastList.remove(0);
-        RecyclerView rvWeather = (RecyclerView) findViewById(R.id.rvWeather);
-        rvWeather.setLayoutManager(new GridLayoutManager(getApplicationContext(), 4, GridLayoutManager.VERTICAL, false));
-        WeatherForecastAdapter weatherForecastAdapter = new WeatherForecastAdapter(getApplicationContext(), dailyForecastList, calendar);
-        rvWeather.setAdapter(weatherForecastAdapter);
-    }
-
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class PlaceholderFragment extends Fragment implements WeatherForecast.View {
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -184,6 +137,9 @@ public class WeatherActivity extends AppCompatActivity implements WeatherForecas
         public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
 
+            weatherForecastPresenter = new WeatherForecastImpl(getContext(), this);
+            weatherForecastPresenter.updateWeather();
+
             DisplayMetrics displayMetrics = new DisplayMetrics();
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             final int width = displayMetrics.widthPixels;
@@ -216,6 +172,63 @@ public class WeatherActivity extends AppCompatActivity implements WeatherForecas
             ivBackgroundToday.startAnimation(animation1);
 
 
+        }
+
+        @Override
+        public void updateWeatherResult(String message) {
+            tvNow.setText(message);
+        }
+
+        @Override
+        public void loadData(Weather weather, Calendar calendar) {
+            DailyForecast today = weather.getDailyForecasts().get(0);
+
+            TextView tvLocation = (TextView) rootView.findViewById(R.id.tvLocation);
+            TextView tvDate = (TextView) rootView.findViewById(R.id.tvDate);
+            ImageView ivToday = (ImageView) rootView.findViewById(R.id.ivToday);
+            TextView tvTempMid = (TextView) rootView.findViewById(R.id.tvTempMid);
+            TextView tvTempMax = (TextView) rootView.findViewById(R.id.tvTempMax);
+            TextView tvTempMin = (TextView) rootView.findViewById(R.id.tvTempMin);
+            TextView tvToday = (TextView) rootView.findViewById(R.id.tvToday);
+
+            TextView tvRealFeel1 = (TextView) rootView.findViewById(R.id.tvRealFeel1);
+            TextView tvUV1 = (TextView) rootView.findViewById(R.id.tvUV1);
+            TextView tvChanceRain = (TextView) rootView.findViewById(R.id.tvChanceRain1);
+            TextView tvSunSet = (TextView) rootView.findViewById(R.id.tvSunSet1);
+
+            tvLocation.setText("Thành phố Hồ Chí Minh");
+            int day_of_week = calendar.get(Calendar.DAY_OF_WEEK);
+            int day_of_month = calendar.get(Calendar.DAY_OF_MONTH);
+            int month = calendar.get(Calendar.MONTH) + 1;
+            if (day_of_week == Calendar.SUNDAY)
+                tvDate.setText("CN, " + day_of_month + " Tháng " + month);
+            else
+                tvDate.setText("T." + day_of_week + ", " + day_of_month + " Tháng " + month);
+
+            int max = today.getTemperature().getMaximum().getValue().intValue();
+            int min = today.getTemperature().getMinimum().getValue().intValue();
+            int mid = (max + min) / 2;
+            tvTempMax.setText(Integer.toString(max) + (char) 0x00B0 + "");
+            tvTempMin.setText(Integer.toString(min) + (char) 0x00B0 + "");
+            tvTempMid.setText(Integer.toString(mid) + (char) 0x00B0 + "C");
+            if (calendar.get(Calendar.HOUR_OF_DAY) < 12) {
+                ivToday.setImageLevel(today.getDay().getIcon());
+                tvToday.setText(today.getDay().getIconPhrase());
+                tvChanceRain.setText(today.getDay().getRainProbability().toString()+ "%");
+            } else {
+                ivToday.setImageLevel(today.getNight().getIcon());
+                tvToday.setText(today.getNight().getIconPhrase());
+                tvChanceRain.setText(today.getNight().getRainProbability().toString() + "%");
+            }
+            tvRealFeel1.setText(Integer.toString(today.getRealFeelTemperature().getMaximum().getValue().intValue()) + (char) 0x00B0 + "C");
+            tvUV1.setText(today.getAirAndPollen().get(0).getCategory());
+            tvSunSet.setText(today.getSun().getSet().substring(11, 16));
+            List<DailyForecast> dailyForecastList = weather.getDailyForecasts();
+            dailyForecastList.remove(0);
+            RecyclerView rvWeather = (RecyclerView) rootView.findViewById(R.id.rvWeather);
+            rvWeather.setLayoutManager(new GridLayoutManager(getContext(), 4, GridLayoutManager.VERTICAL, false));
+            WeatherForecastAdapter weatherForecastAdapter = new WeatherForecastAdapter(getContext(), dailyForecastList, calendar);
+            rvWeather.setAdapter(weatherForecastAdapter);
         }
     }
 

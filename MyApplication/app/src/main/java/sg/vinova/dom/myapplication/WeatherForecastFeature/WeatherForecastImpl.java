@@ -3,6 +3,7 @@ package sg.vinova.dom.myapplication.WeatherForecastFeature;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -43,9 +44,12 @@ public class WeatherForecastImpl implements WeatherForecast.Presenter {
             weatherForecastView.updateWeatherResult("Network error");
             return;
         }
-        new AccuWeatherServiceImpl().getWeather().enqueue(new Callback<Weather>() {
+        new AccuWeatherServiceImpl().getWeather("353981", "QPhSaIjTzIZkIAMz28qz9ONXSbJgGbXd").enqueue(new Callback<Weather>() {
             @Override
             public void onResponse(Call<Weather> call, Response<Weather> response) {
+
+                if (weather == null)
+                    weatherForecastView.updateWeatherResult("Turn end");
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
                 weatherForecastView.updateWeatherResult(context.getString(R.string.time_now_format, sdf.format(calendar.getTime())));
@@ -55,7 +59,7 @@ public class WeatherForecastImpl implements WeatherForecast.Presenter {
 
             @Override
             public void onFailure(Call<Weather> call, Throwable t) {
-
+                Log.e("error", t.toString());
             }
         });
 

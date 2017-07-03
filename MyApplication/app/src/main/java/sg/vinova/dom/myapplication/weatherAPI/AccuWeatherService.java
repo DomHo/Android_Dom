@@ -2,6 +2,8 @@ package sg.vinova.dom.myapplication.weatherAPI;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 import sg.vinova.dom.myapplication.model.Weather.Weather;
 
 /**
@@ -10,6 +12,6 @@ import sg.vinova.dom.myapplication.model.Weather.Weather;
 
 public interface AccuWeatherService {
 
-    @GET("353981?apikey=7PlMr174CF5AQPZtbCmvAxfZUhlYk1y5&language=vi&details=trua&metric=true")
-    Call<Weather> getWeather();
+    @GET("forecasts/v1/daily/5day/{locationId}?language=vi&details=true&metric=true")
+    Call<Weather> getWeather(@Path("locationId") String locationId, @Query("apikey") String apikey);
 }

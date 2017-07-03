@@ -55,10 +55,10 @@ public class Night {
     private Ice ice;
     @SerializedName("HoursOfPrecipitation")
     @Expose
-    private Integer hoursOfPrecipitation;
+    private float hoursOfPrecipitation;
     @SerializedName("HoursOfRain")
     @Expose
-    private Integer hoursOfRain;
+    private float hoursOfRain;
     @SerializedName("HoursOfSnow")
     @Expose
     private Integer hoursOfSnow;
@@ -189,7 +189,7 @@ public class Night {
         this.ice = ice;
     }
 
-    public Integer getHoursOfPrecipitation() {
+    public float getHoursOfPrecipitation() {
         return hoursOfPrecipitation;
     }
 
@@ -197,7 +197,7 @@ public class Night {
         this.hoursOfPrecipitation = hoursOfPrecipitation;
     }
 
-    public Integer getHoursOfRain() {
+    public float getHoursOfRain() {
         return hoursOfRain;
     }
 

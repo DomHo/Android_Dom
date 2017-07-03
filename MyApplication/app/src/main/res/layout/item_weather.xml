@@ -30,11 +30,13 @@
         android:id="@+id/tvMaxMin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="as" />
+        tools:text="as"
+        android:textColor="#000"/>
 
     <TextView
         android:id="@+id/tvWater"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorBlue"/>
 
 </LinearLayout>
