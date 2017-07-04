@@ -221,7 +221,7 @@ public class WeatherActivity extends AppCompatActivity {
                 tvChanceRain.setText(today.getNight().getRainProbability().toString() + "%");
             }
             tvRealFeel1.setText(Integer.toString(today.getRealFeelTemperature().getMaximum().getValue().intValue()) + (char) 0x00B0 + "C");
-            tvUV1.setText(today.getAirAndPollen().get(0).getCategory());
+            tvUV1.setText(today.getAirAndPollen().get(5).getCategory());
             tvSunSet.setText(today.getSun().getSet().substring(11, 16));
             List<DailyForecast> dailyForecastList = weather.getDailyForecasts();
             dailyForecastList.remove(0);

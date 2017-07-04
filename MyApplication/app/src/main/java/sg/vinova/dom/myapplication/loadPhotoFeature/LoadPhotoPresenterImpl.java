@@ -7,11 +7,13 @@ import android.util.Log;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import sg.vinova.dom.myapplication.R;
-import sg.vinova.dom.myapplication.photoAPI.PlaceholderServiceImpl;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import sg.vinova.dom.myapplication.API.PhotoServiceImpl;
 import sg.vinova.dom.myapplication.model.Photo;
 
 public class LoadPhotoPresenterImpl implements LoadPhoto.Presenter {
@@ -19,10 +21,44 @@ public class LoadPhotoPresenterImpl implements LoadPhoto.Presenter {
     private Context context;
     private LoadPhoto.View loadPhotoView;
     private List<Photo> photoList;
+    private Observer<List<Photo>> myObserver = null;
+    private Observable<List<Photo>> myObservable = null;
 
     public LoadPhotoPresenterImpl(Context context, LoadPhoto.View loadPhotoView) {
         this.context = context;
         this.loadPhotoView = loadPhotoView;
+        init();
+    }
+
+    private void init() {
+        if (myObservable == null)
+            myObservable = new PhotoServiceImpl().getPhotos();
+
+        if (myObserver == null)
+            myObserver = new Observer<List<Photo>>() {
+                @Override
+                public void onSubscribe(@NonNull Disposable d) {
+                    Log.d("photo", "onSubscribe");
+                }
+
+                @Override
+                public void onNext(@NonNull List<Photo> photos) {
+                    Log.d("photo", "onNext");
+                    photoList = photos;
+                    loadPhotoView.loadNewData(photoList);
+                }
+
+                @Override
+                public void onError(@NonNull Throwable e) {
+                    Log.d("photo", "onError");
+                    loadPhotoView.error(e.toString());
+                }
+
+                @Override
+                public void onComplete() {
+                    Log.d("photo", "onComplete");
+                }
+            };
     }
 
     @Override
@@ -39,17 +75,9 @@ public class LoadPhotoPresenterImpl implements LoadPhoto.Presenter {
             loadPhotoView.error("Network error");
             return;
         }
-        new PlaceholderServiceImpl().getPhotos().enqueue(new Callback<List<Photo>>() {
-            @Override
-            public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response) {
-                photoList = response.body();
-                loadPhotoView.loadNewData(photoList);
-            }
 
-            @Override
-            public void onFailure(Call<List<Photo>> call, Throwable t) {
-                Log.e("photoAPI", t.toString());
-            }
-        });
+        myObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(myObserver);
     }
 }

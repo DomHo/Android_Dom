@@ -2,8 +2,8 @@ package sg.vinova.dom.myapplication.utils;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
@@ -46,7 +45,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         navigationView.setCheckedItem(R.id.nav_gallery);
-        navigationView.getMenu().performIdentifierAction(R.id.nav_gallery, 0);
+//        navigationView.getMenu().performIdentifierAction(R.id.nav_gallery, 0);
+        onNavigationItemSelected(navigationView.getMenu().getItem(0));
     }
 
     @Override
@@ -118,7 +118,9 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.nav_gallery:
                 current = R.id.nav_gallery;
-                getSupportFragmentManager().beginTransaction().replace(R.id.flMain, GalleryFragment.newInstance()).commitAllowingStateLoss();
+                FragmentTransaction fragmentTransaction =  getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.flMain, GalleryFragment.newInstance());
+                fragmentTransaction.commitAllowingStateLoss();
                 toolbar.setTitle(R.string.nav_gallery);
                 break;
             case R.id.nav_weather:
