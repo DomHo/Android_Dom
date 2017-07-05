@@ -12,6 +12,14 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.jakewharton.rxbinding2.widget.RxTextView;
+
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 import sg.vinova.dom.myapplication.R;
 
 public class MyCustomView extends LinearLayout {
@@ -81,18 +89,14 @@ public class MyCustomView extends LinearLayout {
         btnLogin = (Button) rootView.findViewById(R.id.btnLogin);
         btnGuest = (Button) rootView.findViewById(R.id.btnGuest);
 
-        edtUsername.addTextChangedListener(mTextEditorWatcher);
+        RxTextView.textChanges(edtUsername)
+                .debounce(3000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<CharSequence>() {
+                    @Override
+                    public void accept(@NonNull CharSequence charSequence) throws Exception {
+                        tvMessage.setText(charSequence + "/50");
+                    }
+                });
     }
-
-    private final TextWatcher mTextEditorWatcher = new TextWatcher() {
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-        }
-
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            tvMessage.setText(String.valueOf(s.length()) + "/50");
-        }
-
-        public void afterTextChanged(Editable s) {
-        }
-    };
 }

@@ -24,7 +24,7 @@ public class LoginActivity extends AppCompatActivity implements Login.View, View
     private LoginPresenterImpl loginPresenter;
 
     private ConstraintLayout clLogin;
-    MyCustomView myCustomView;
+    private MyCustomView myCustomView;
     private FrameLayout flSignup;
     private LinearLayout llSignup;
     private Button btnSingup1;
@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity implements Login.View, View
 
                 @Override
                 public void onAnimationEnd(Animator animator) {
-//
+
                 }
 
                 @Override

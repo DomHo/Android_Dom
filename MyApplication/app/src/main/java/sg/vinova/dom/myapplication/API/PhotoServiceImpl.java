@@ -1,11 +1,10 @@
 package sg.vinova.dom.myapplication.API;
 
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-
 import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import sg.vinova.dom.myapplication.model.Photo;
 

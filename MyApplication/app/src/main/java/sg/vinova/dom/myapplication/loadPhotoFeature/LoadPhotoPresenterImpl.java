@@ -5,15 +5,19 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import sg.vinova.dom.myapplication.API.PhotoServiceImpl;
+import sg.vinova.dom.myapplication.R;
 import sg.vinova.dom.myapplication.model.Photo;
 
 public class LoadPhotoPresenterImpl implements LoadPhoto.Presenter {
@@ -21,8 +25,9 @@ public class LoadPhotoPresenterImpl implements LoadPhoto.Presenter {
     private Context context;
     private LoadPhoto.View loadPhotoView;
     private List<Photo> photoList;
-    private Observer<List<Photo>> myObserver = null;
     private Observable<List<Photo>> myObservable = null;
+    private Observer<List<Photo>> myObserver = null;
+    int i = 0;
 
     public LoadPhotoPresenterImpl(Context context, LoadPhoto.View loadPhotoView) {
         this.context = context;

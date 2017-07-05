@@ -21,8 +21,8 @@ import sg.vinova.dom.myapplication.R;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    Toolbar toolbar;
-    int current;
+    private Toolbar toolbar;
+    int currentNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +45,10 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         navigationView.setCheckedItem(R.id.nav_gallery);
-//        navigationView.getMenu().performIdentifierAction(R.id.nav_gallery, 0);
-        onNavigationItemSelected(navigationView.getMenu().getItem(0));
+
+        currentNav = R.id.nav_gallery;
+        getSupportFragmentManager().beginTransaction().replace(R.id.flMain, GalleryFragment.newInstance()).commitAllowingStateLoss();
+        toolbar.setTitle(R.string.nav_gallery);
     }
 
     @Override
@@ -62,8 +64,8 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setCheckedItem(current);
-        navigationView.getMenu().performIdentifierAction(current, 0);
+        navigationView.setCheckedItem(currentNav);
+        navigationView.getMenu().performIdentifierAction(currentNav, 0);
     }
 
     @Override
@@ -117,10 +119,8 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
             case R.id.nav_gallery:
-                current = R.id.nav_gallery;
-                FragmentTransaction fragmentTransaction =  getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.flMain, GalleryFragment.newInstance());
-                fragmentTransaction.commitAllowingStateLoss();
+                currentNav = R.id.nav_gallery;
+                getSupportFragmentManager().beginTransaction().replace(R.id.flMain, GalleryFragment.newInstance()).commitAllowingStateLoss();
                 toolbar.setTitle(R.string.nav_gallery);
                 break;
             case R.id.nav_weather:

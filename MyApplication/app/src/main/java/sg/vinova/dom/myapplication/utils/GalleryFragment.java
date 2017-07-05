@@ -10,8 +10,8 @@ import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,11 +25,11 @@ import sg.vinova.dom.myapplication.model.Photo;
 
 public class GalleryFragment extends Fragment implements LoadPhoto.View {
 
-    private LoadPhotoPresenterImpl loadPhotoPresenter;
+    private LoadPhotoPresenterImpl loadPhotoPresenter = null;
 
-    View rootView;
-    RecyclerView rvGallery;
-    LoadPhotoAdapter loadPhotoAdapter = null;
+    private View rootView;
+    private RecyclerView rvGallery;
+    private LoadPhotoAdapter loadPhotoAdapter = null;
 
     public static GalleryFragment newInstance() {
         return new GalleryFragment();
@@ -38,7 +38,7 @@ public class GalleryFragment extends Fragment implements LoadPhoto.View {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadPhotoPresenter = new LoadPhotoPresenterImpl(getActivity().getApplicationContext(), this);
+        loadPhotoPresenter = new LoadPhotoPresenterImpl(getContext(), this);
         loadPhotoPresenter.getNewData();
     }
 
