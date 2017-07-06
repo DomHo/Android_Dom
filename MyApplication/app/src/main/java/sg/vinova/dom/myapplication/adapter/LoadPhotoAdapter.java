@@ -21,7 +21,7 @@ import sg.vinova.dom.myapplication.model.Photo;
 public class LoadPhotoAdapter extends RecyclerView.Adapter<LoadPhotoAdapter.ViewHolder> implements View.OnClickListener {
 
     private Context context;
-    private List<Photo> photoList = null;
+    private List<Photo> photoList;
     private LoadPhoto.View loadPhotoView;
 
     public LoadPhotoAdapter(Context context, List<Photo> photoList, LoadPhoto.View loadPhotoView) {

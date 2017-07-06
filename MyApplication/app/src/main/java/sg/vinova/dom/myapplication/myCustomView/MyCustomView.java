@@ -16,19 +16,49 @@ import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import sg.vinova.dom.myapplication.R;
 
 public class MyCustomView extends LinearLayout {
 
-    View rootView;
-    private EditText edtUsername, edtPassword;
-    private CheckBox cbSave;
-    private TextView tvMessage;
-    public Button btnSignup, btnLogin, btnGuest;
+    @BindView(R.id.edtUsername)
+    EditText edtUsername;
+    @BindView(R.id.edtPassword)
+    EditText edtPassword;
+    @BindView(R.id.cbSave)
+    CheckBox cbSave;
+    @BindView(R.id.tvMessage)
+    TextView tvMessage;
+    @BindView(R.id.btnSignup)
+    public Button btnSignup;
+    @BindView(R.id.btnLogin)
+    public Button btnLogin;
+    @BindView(R.id.btnGuest)
+    public Button btnGuest;
+
+    public MyCustomView(Context context) {
+        super(context);
+        init(context);
+    }
+
+    public MyCustomView(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        init(context);
+    }
+
+    public MyCustomView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(context);
+    }
+
+    public MyCustomView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        init(context);
+    }
 
     public String getUsername() {
         return edtUsername.getText().toString();
@@ -58,44 +88,16 @@ public class MyCustomView extends LinearLayout {
         tvMessage.setText(message);
     }
 
-    public MyCustomView(Context context) {
-        super(context);
-        init(context);
-    }
-
-    public MyCustomView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        init(context);
-    }
-
-    public MyCustomView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context);
-    }
-
-    public MyCustomView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(context);
-    }
-
     private void init(Context context) {
-        rootView = inflate(context, R.layout.my_custom_view, this);
-
-        edtUsername = (EditText) rootView.findViewById(R.id.edtUsername);
-        edtPassword = (EditText) rootView.findViewById(R.id.edtPassword);
-        cbSave = (CheckBox) rootView.findViewById(R.id.cbSave);
-        tvMessage = (TextView) rootView.findViewById(R.id.tvMessage);
-        btnSignup = (Button) rootView.findViewById(R.id.btnSignup);
-        btnLogin = (Button) rootView.findViewById(R.id.btnLogin);
-        btnGuest = (Button) rootView.findViewById(R.id.btnGuest);
+        inflate(context, R.layout.my_custom_view, this);
+        ButterKnife.bind(this);
 
         RxTextView.textChanges(edtUsername)
-                .debounce(3000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<CharSequence>() {
                     @Override
                     public void accept(@NonNull CharSequence charSequence) throws Exception {
-                        tvMessage.setText(charSequence + "/50");
+                        tvMessage.setText(charSequence.length() + "/50");
                     }
                 });
     }

@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clLogin"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
     tools:context="sg.vinova.dom.myapplication.utils.LoginActivity">
 
     <ImageView
         android:id="@+id/ivLogin"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_marginBottom="0dp"
         android:background="@android:drawable/btn_star_big_on"
         app:layout_constraintBottom_toTopOf="@+id/mcvLogin"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -21,15 +23,16 @@
         android:id="@+id/mcvLogin"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="90dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivLogin" />
 
     <FrameLayout
         android:id="@+id/flSignup"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="#FFFFFF"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
