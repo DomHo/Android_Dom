@@ -2,8 +2,6 @@ package sg.vinova.dom.myapplication.myCustomView;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
@@ -14,10 +12,6 @@ import android.widget.TextView;
 
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
-import java.util.concurrent.TimeUnit;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
@@ -25,20 +19,10 @@ import sg.vinova.dom.myapplication.R;
 
 public class MyCustomView extends LinearLayout {
 
-    @BindView(R.id.edtUsername)
-    EditText edtUsername;
-    @BindView(R.id.edtPassword)
-    EditText edtPassword;
-    @BindView(R.id.cbSave)
-    CheckBox cbSave;
-    @BindView(R.id.tvMessage)
-    TextView tvMessage;
-    @BindView(R.id.btnSignup)
-    public Button btnSignup;
-    @BindView(R.id.btnLogin)
-    public Button btnLogin;
-    @BindView(R.id.btnGuest)
-    public Button btnGuest;
+    private EditText edtUsername, edtPassword;
+    private CheckBox cbSave;
+    private TextView tvMessage;
+    public Button btnSignup, btnLogin, btnGuest;
 
     public MyCustomView(Context context) {
         super(context);
@@ -89,8 +73,15 @@ public class MyCustomView extends LinearLayout {
     }
 
     private void init(Context context) {
-        inflate(context, R.layout.my_custom_view, this);
-        ButterKnife.bind(this);
+        View rootView = inflate(context, R.layout.my_custom_view, this);
+
+        edtUsername = (EditText) rootView.findViewById(R.id.edtUsername);
+        edtPassword = (EditText) rootView.findViewById(R.id.edtPassword);
+        cbSave = (CheckBox) rootView.findViewById(R.id.cbSave);
+        tvMessage = (TextView) rootView.findViewById(R.id.tvMessage);
+        btnSignup = (Button) rootView.findViewById(R.id.btnSignup);
+        btnLogin = (Button) rootView.findViewById(R.id.btnLogin);
+        btnGuest = (Button) rootView.findViewById(R.id.btnGuest);
 
         RxTextView.textChanges(edtUsername)
                 .observeOn(AndroidSchedulers.mainThread())
